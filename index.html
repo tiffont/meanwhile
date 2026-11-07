@@ -416,12 +416,12 @@ document.documentElement.dataset.theme="dark";
    Nothing external loads until the IDs are set AND the visitor accepts.
    ===================================================================== */
 const CONFIG = {
-  siteUrl: "",                    // e.g. "https://meanwhile.app" — used in share links (falls back to the current URL)
+  siteUrl: "https://meanwhile-comic-recaps.vercel.app",                    // e.g. "https://meanwhile.app" — used in share links (falls back to the current URL)
   siteName: "Meanwhile…",
-  ownerName: "[Your name or company]",   // legal owner shown in the policies
-  contactEmail: "hello@example.com",      // general + privacy contact
-  takedownEmail: "takedown@example.com",  // copyright / removal requests
-  mailingAddress: "[Mailing address]",    // needed if you register a DMCA agent
+  ownerName: "Tiffon Turner",   // legal owner shown in the policies
+  contactEmail: "tiffont@gmail.com",      // general + privacy contact
+  takedownEmail: "tiffont@gmail.com",  // copyright / removal requests
+  mailingAddress: "",    // needed if you register a DMCA agent
   legalUpdated: "November 7, 2026",
   adsEnabled: false,              // flip to true when you're ready for ads — slots, house ads and AdSense all come back
   gaId: "",                       // Google Analytics 4 Measurement ID, e.g. "G-ABC123XYZ"
@@ -430,7 +430,7 @@ const CONFIG = {
     "home-mid": "", "home-low": "", "recap-mid": "", "recap-end": "", "list": ""
   },
   houseAds: [                     // shown when an AdSense unit isn't set (or is blocked) — your own promos/sponsors
-    {title:"Your comic shop here", text:"Advertise to readers who are about to pick up their next issue.", cta:"Advertise", href:"mailto:ads@example.com"},
+    {title:"Your comic shop here", text:"Advertise to readers who are about to pick up their next issue.", cta:"Advertise", href:"mailto:tiffont@gmail.com"},
     {title:"Never lose the plot", text:"Bookmark Meanwhile… and check back before every new issue.", cta:"Browse recaps", href:"#all-latest"}
   ],
   requireConsent: true            // show the cookie banner before analytics/ads load
@@ -824,8 +824,8 @@ const LEGAL = {
     <p>If something was removed by mistake, the affected party can send a counter-notice to the same address explaining why, with the details required by law.</p>
     <h2>Corrections</h2>
     <p>Not a copyright issue, just an error in a recap? Use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
-    <h2>Designated agent</h2>
-    <p>${esc(CONFIG.ownerName)}<br>${esc(CONFIG.mailingAddress)}<br>${mail(CONFIG.takedownEmail)}</p>`},
+    <h2>Where to send requests</h2>
+    <p>${esc(CONFIG.ownerName)}<br>${CONFIG.mailingAddress?esc(CONFIG.mailingAddress)+"<br>":""}${mail(CONFIG.takedownEmail)}</p>`},
   disclaimer: {t:"Disclaimer", body:()=>`
     <h2>Spoilers</h2>
     <p>Meanwhile… is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings.</p>

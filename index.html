@@ -377,6 +377,23 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 .shead{border-bottom-width:1px}
 .shead h2::after{content:"";display:inline-block;width:.18em;height:.18em;border-radius:50%;background:var(--lime-text);margin-left:.08em;vertical-align:baseline}
 .toast.show{transform:translate(-50%,0);visibility:visible}
+
+/* bolder buttons */
+.btn{font-family:var(--display);font-stretch:110%;font-weight:800;font-size:.95rem;letter-spacing:.04em;border:2px solid #fff;color:#fff;transition:background .15s,color .15s,border-color .15s,transform .08s}
+.btn:hover{background:#fff;color:#111}
+.btn.solid{color:var(--lime-ink);border-color:var(--lime);box-shadow:inset 0 0 0 2px var(--lime),0 0 0 2px rgba(255,255,255,0)}
+.btn.solid:hover{background:#fff;border-color:#fff;color:#111}
+.fb button{font-weight:800;font-size:.74rem;letter-spacing:.04em;border:1.5px solid #fff;color:#fff;padding:7px 14px}
+.fb button:hover{background:#fff;color:#111}
+.pill{font-weight:800;letter-spacing:.04em;border:2px solid #fff;color:#fff}
+.pill:hover{background:#fff;color:#111}
+.seeall{font-weight:800}
+
+/* share label above icons, bold */
+.share{flex-direction:column;gap:12px}
+.art .share{margin-top:48px}
+.sharefoot{margin-top:48px}
+.sharelabel{font-family:var(--display);font-stretch:110%;font-weight:800;font-size:.95rem;letter-spacing:.04em;color:#fff}
 </style>
 </head>
 <body>
@@ -686,7 +703,6 @@ function recapView(s,i){
     <div class="actions">
       ${issueRows(s).length>1?`<button class="btn solid" data-catch>Missed more? Catch me up</button>`:""}
     </div>
-    <div class="fb">Was this accurate? <button data-fb="y">Yes</button><button data-fb="n">Something's off</button></div>
     ${shareBar(key(s,i.n), `Catch up on ${s.title} #${i.n} in 45 seconds`, "Know someone reading this?")}
     ${ads.slot("recap-end")}
   </article></div>`;
@@ -767,7 +783,7 @@ const LEGAL = {
     <h2>Spoilers</h2>
     <p>This is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings. Only read recaps of issues you've already read or don't mind having spoiled.</p>
     <h2>Accuracy and AI assistance</h2>
-    <p>Recaps are written with the help of AI tools and reviewed by us, but they may still contain mistakes, such as misidentified characters or misread scenes. Recaps are provided "as is" for general information and entertainment. They are not a substitute for reading the comics. If you spot an error, use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <p>Recaps are written with the help of AI tools and reviewed by us, but they may still contain mistakes, such as misidentified characters or misread scenes. Recaps are provided "as is" for general information and entertainment. They are not a substitute for reading the comics. If you spot an error, <a href="#contact">contact us</a>.</p>
     <h2>Intellectual property</h2>
     <p>Comic titles, characters, story elements, cover art and publisher logos belong to their respective owners. We use cover thumbnails and publisher names and logos only to identify the works being discussed. Our recaps are original summaries written in our own words. We do not host or distribute comic pages, and nothing on the Site is a replacement for buying the comics.</p>
     <p>The Site's design, code and original recap text belong to ${esc(CONFIG.ownerName)}. You may share links to recaps and quote short excerpts with credit. Please don't copy recaps wholesale or republish them elsewhere.</p>
@@ -823,7 +839,7 @@ const LEGAL = {
     <h2>Counter-notice</h2>
     <p>If something was removed by mistake, the affected party can send a counter-notice to the same address explaining why, with the details required by law.</p>
     <h2>Corrections</h2>
-    <p>Not a copyright issue, just an error in a recap? Use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <p>Not a copyright issue, just an error in a recap? <a href="#contact">Contact us</a>.</p>
     <h2>Where to send requests</h2>
     <p>${esc(CONFIG.ownerName)}<br>${CONFIG.mailingAddress?esc(CONFIG.mailingAddress)+"<br>":""}${mail(CONFIG.takedownEmail)}</p>`},
   disclaimer: {t:"Disclaimer", body:()=>`
@@ -834,7 +850,7 @@ const LEGAL = {
     <h2>Ownership</h2>
     <p>Comic titles, characters, story elements, cover art and publisher logos are the property of their respective owners. Cover thumbnails and logos are shown only to identify the comics being discussed. Recaps are original summaries written in our own words and are not a substitute for reading the comics.</p>
     <h2>Accuracy</h2>
-    <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors. If you spot one, use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors. If you spot one, <a href="#contact">contact us</a>.</p>
     <h2>Rights holders</h2>
     <p>If you own something shown here and want it changed or removed, see <a href="#takedown">Copyright &amp; takedowns</a>.</p>`},
   contact: {t:"Contact", body:()=>`

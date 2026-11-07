@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Meanwhile… — comic recaps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<style>
+:root{
+  --paper:#ededed; --well:#dedede; --ink:#151515; --ink2:#555; --rule:#b9b9b9; --black:#151515; --white:#f4f4f4;
+  --sub:#333; --skel:#cfcfcf; --ph1:#d2d2d2; --ph2:#c8c8c8; --phink:#9a9a9a; --off:#bdbdbd; --offink:#f2f2f2; --onblack:#cfcfcf; --dim:#aaa; --hold:#8a8a8a; --foot:#151515; --edge:transparent;
+  --lime:#c7e47f; --lime-ink:#18200a; --lime-text:#4f6b12;
+  --display:"Archivo",system-ui,sans-serif;
+  --sans:"Inter",-apple-system,system-ui,sans-serif;
+  --serif:"Source Serif 4",Georgia,serif;
+  color-scheme:light;
+}
+html[data-theme="dark"],:root:root{
+  --paper:#111; --well:#1b1b1b; --ink:#ececec; --ink2:#a3a3a3; --rule:#3a3a3a; --black:#000; --white:#f1f1f1;
+  --sub:#cfcfcf; --skel:#2a2a2a; --ph1:#262626; --ph2:#2e2e2e; --phink:#5a5a5a; --off:#262626; --offink:#5f5f5f; --onblack:#bdbdbd; --dim:#8a8a8a; --hold:#6f6f6f; --foot:#000; --edge:#2e2e2e; --lime-text:#c7e47f;
+  color-scheme:dark;
+}
+.lead,.art .hero,.cliff,.pub .plate,.phead .plate{box-shadow:inset 0 0 0 1px var(--edge)}
+.tools{justify-self:end;display:flex;gap:8px;align-items:center}
+.theme{width:34px;height:34px;border:1.5px solid var(--ink);border-radius:999px;display:grid;place-items:center}
+.theme svg{width:16px;height:16px}
+.theme .sun{display:none}
+html[data-theme="dark"] .theme .sun{display:block}
+html[data-theme="dark"] .theme .moon{display:none}
+@media (max-width:640px){.theme{width:38px;height:38px}}
+.bar .theme{width:30px;height:30px}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper)!important}
+body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;
+  padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0);min-height:100dvh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* type helpers */
+.disp{font-family:var(--display);font-weight:900;font-stretch:125%;text-transform:uppercase;line-height:.9;letter-spacing:-.01em}
+.cond{font-family:var(--display);font-weight:800;font-stretch:75%;text-transform:uppercase;line-height:.92;letter-spacing:-.01em}
+.meta{font-size:.7rem;text-transform:uppercase;letter-spacing:.02em;color:var(--ink)}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border:1px solid currentColor;border-radius:999px;font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+.tag.solid{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.dead{opacity:.45}
+
+/* masthead */
+.mast{padding:calc(env(safe-area-inset-top,0px) + 14px) 0 14px}
+.mast .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.mast .mark{justify-self:start;display:flex;gap:4px}
+.mast .mark i{display:block;width:14px;height:30px;border-radius:7px;border:1.5px solid var(--ink)}
+.mast .mark i:nth-child(2){background:var(--lime);border-color:var(--lime)}
+.logo{font-family:var(--display);font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:clamp(2.1rem,8.5vw,5.2rem);line-height:.85;letter-spacing:-.02em}
+.pill{justify-self:end;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border:1.5px solid var(--ink);border-radius:999px;font-size:.78rem;font-weight:600;text-transform:uppercase}
+.pill svg{width:15px;height:15px}
+@media (max-width:640px){.mast .mark{display:none}.mast .wrap{grid-template-columns:1fr auto}.pill span{display:none}.pill{width:38px;height:38px;padding:0;justify-content:center}}
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;background:color-mix(in srgb,var(--paper) 62%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);transform:translateY(-100%);transition:transform .25s;padding-top:env(safe-area-inset-top,0)}
+.bar.show{transform:none}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;height:50px}
+.bar .logo{font-size:1.5rem}
+.brandrow{display:flex;align-items:center;gap:10px}
+.bar .mark{display:flex;gap:3px}
+.bar .mark i{display:block;width:9px;height:20px;border-radius:5px;border:1.5px solid var(--ink)}
+.bar .mark i:nth-child(2){background:var(--lime);border-color:var(--lime)}
+.bar .pill{height:30px}
+
+/* search drawer */
+.searchbox{padding:6px 0 18px}
+.sfield{display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--ink);padding:6px 12px 6px 14px}
+.sfield [data-closesearch]{display:grid;place-items:center;width:32px;height:32px;margin-right:-4px}
+.sfield svg{width:22px;height:22px;flex:none}
+.sfield input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-family:var(--display);font-stretch:100%;font-weight:700;font-size:1.4rem;color:var(--ink);padding:6px 0}
+.sfield input:focus{outline:none}
+.sfield input::placeholder{color:var(--hold)}
+.hits{list-style:none;margin:0;padding:0}
+.hits li{border-bottom:1px solid var(--rule)}
+.hit{display:flex;align-items:center;gap:14px;width:100%;padding:12px 0}
+.hit img,.hit .ph{width:42px;height:63px;object-fit:cover;flex:none}
+.hit b{display:block;font-weight:700;font-size:1rem;line-height:1.2}
+.hit .meta{color:var(--ink2)}
+.hit .tag{margin-left:auto}
+.none{padding:16px 0;color:var(--ink2)}
+.none b{color:var(--ink)}
+.none button{margin-top:10px}
+
+/* home lead */
+.well{background:var(--well);border-radius:16px;padding:14px;display:grid;grid-template-columns:1.85fr 1fr;gap:14px}
+@media (max-width:860px){.well{grid-template-columns:1fr;padding:10px}}
+.lead{position:relative;display:block;width:100%;min-height:440px;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:var(--black);color:var(--white);text-align:center}
+@media (min-width:861px){.lead{aspect-ratio:auto;min-height:520px;height:100%}}
+.lead .img{position:absolute;inset:0;background:var(--skel)}
+.lead .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.lead:hover .img img{transform:scale(1.03)}
+.lead .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.92) 100%)}
+.lead .txt{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 18px 20px}
+.lead .tag{color:var(--lime-ink);background:var(--lime);border-color:var(--lime)}
+.lead h1{font-family:var(--display);font-stretch:100%;font-weight:800;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.04;margin:0;max-width:18ch;letter-spacing:-.025em;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.lead p{margin:0;max-width:44ch;font-size:.92rem;color:#e2e2e2}
+.lead .meta{color:#cfcfcf}
+.side{display:flex;flex-direction:column;padding:4px 6px}
+.side h2{display:flex;align-items:center;gap:10px;margin:6px 0 10px;font-size:clamp(1.8rem,3.2vw,2.2rem)}
+.side h2 .arrows{display:flex;flex-direction:column;gap:1px}
+.side h2 .arrows i{display:block;width:16px;height:9px;border:3px solid var(--lime-text);border-top:0;border-left:0;transform:rotate(45deg) translate(-2px,-2px);width:12px;height:12px}
+.side ul{list-style:none;margin:0;padding:0}
+.side li{border-top:1px solid var(--ink)}
+.side li button,.side li .x{display:block;width:100%;padding:12px 0 14px}
+.side li b{display:block;font-weight:700;font-size:1.02rem;line-height:1.22;margin-top:4px}
+
+/* sections */
+.sec{padding:44px 0 8px}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:0}
+.shead h2{margin:0;font-size:clamp(2.2rem,9vw,4.2rem);white-space:nowrap}
+.shead .meta{padding-bottom:6px;white-space:nowrap}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+  width:calc(100% - 32px);max-width:1148px;margin:0 auto;padding:16px 0 8px;scroll-padding-inline:0}
+.rail::-webkit-scrollbar{display:none}
+.card{flex:none;width:200px;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;padding:10px 10px 16px;background:var(--well);border-radius:14px;box-shadow:inset 0 0 0 1px var(--edge);transition:transform .15s}
+.card:active{transform:scale(.98)}
+.card .img{width:100%;aspect-ratio:2/3;background:var(--skel);overflow:hidden;position:relative;border-radius:8px}
+.card .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .tag,.card b,.card .meta{margin-inline:4px}
+.card b{font-weight:700;font-size:1.08rem;line-height:1.18}
+.card .meta{color:var(--ink2)}
+.ph{background:repeating-linear-gradient(135deg,var(--ph1) 0 8px,var(--ph2) 8px 16px);display:grid;place-items:center}
+.ph span{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:1.4rem;color:var(--phink)}
+.pub{flex:none;width:200px;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;padding:10px 10px 14px;background:var(--well);border-radius:14px;box-shadow:inset 0 0 0 1px var(--edge)}
+.pub .meta{margin-inline:4px}
+.pub .plate{height:120px;border-radius:10px;background:var(--black);color:#fff;display:grid;place-items:center;padding:0 12px;text-align:center;font-size:1.25rem}
+.pub[disabled]{cursor:default}
+.pub[disabled] .plate{background:var(--off);color:var(--offink)}
+
+/* series + publisher pages */
+.crumb{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px);z-index:15;display:inline-flex;align-items:center;gap:10px;margin:4px 0 6px;padding:9px 18px 9px 10px;border-radius:999px;
+  font-family:var(--display);font-stretch:110%;font-weight:800;font-size:.95rem;text-transform:uppercase;letter-spacing:.01em;color:var(--ink);
+  background:color-mix(in srgb,var(--well) 55%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 6px 20px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s}
+.crumb svg{width:26px;height:26px;padding:5px;border-radius:50%;background:var(--lime);color:var(--lime-ink);flex:none}
+.crumb:hover{box-shadow:inset 0 0 0 1px var(--lime),0 6px 20px rgba(0,0,0,.35)}
+.crumb:active{transform:scale(.97)}
+.phead{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:end;padding:14px 0 22px;border-bottom:1px solid var(--ink)}
+.phead .cov{width:120px;aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--skel)}
+.phead .cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phead>div{min-width:0}
+.phead h1{margin:8px 0 8px;font-size:clamp(2rem,7.4vw,4.4rem);overflow-wrap:anywhere}
+.phead p{margin:0;color:var(--ink2);font-size:.9rem}
+.phead .plate{width:120px;height:90px;border-radius:10px;background:var(--black);color:#fff;display:grid;place-items:center;font-size:1.1rem;padding:0 8px;text-align:center}
+.prog{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.prog .track{flex:1;height:4px;background:var(--skel)}
+.prog .track i{display:block;height:100%;background:var(--ink)}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{border-bottom:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:minmax(64px,auto) 1fr auto;gap:18px;align-items:center;width:100%;padding:14px 0}
+.row[disabled]{cursor:default}
+.row .no{font-size:2rem}
+.row b{display:block;font-weight:700;font-size:1.05rem;line-height:1.2}
+.row .meta{color:var(--ink2);margin-top:3px}
+
+.crumbwrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px);z-index:15;height:0}
+.crumbwrap .crumb{position:relative;top:14px}
+.pubhero{position:relative;overflow:hidden;width:100%;min-height:300px;margin:0 0 18px;display:flex;align-items:flex-end;background:var(--well)}
+.pubhero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:saturate(.9)}
+.pubhero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.2) 100%),linear-gradient(0deg,rgba(17,17,17,1) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.45) 100%)}
+.pubhero .txt{position:relative;padding-top:90px;padding-bottom:26px}
+.pubhero .eyebrow2{display:block;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#e8e8e8;margin-bottom:4px}
+.pubhero h1{margin:0;color:#fff;font-size:clamp(3rem,13vw,6.5rem);line-height:.88}
+.pubhero p{margin:10px 0 0;font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;color:var(--lime)}
+@media (min-width:700px){.pubhero{min-height:380px}}
+.thumb{width:64px;aspect-ratio:2/3;position:relative;overflow:hidden;border-radius:6px;background:var(--skel);flex:none}
+.thumb.sm{width:42px}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
+.row .go{display:grid;place-items:center;width:44px;color:var(--ink2);transition:color .15s,transform .2s}
+.row .go svg{width:40px;height:16px}
+.row:hover .go{color:var(--lime);transform:translateX(4px)}
+.seeall{display:inline-flex;align-items:center;gap:8px;padding-bottom:6px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--ink);white-space:nowrap}
+.seeall span{color:var(--ink2);font-weight:500}
+.seeall svg{width:30px;height:12px;color:var(--lime-text);transition:transform .2s}
+.seeall:hover svg{transform:translateX(4px)}
+.lhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:1px solid var(--ink);padding:10px 0 10px;margin-bottom:18px}
+.lhead h1{margin:0;font-size:clamp(2.8rem,11vw,5rem)}
+.lhead .meta{padding-bottom:8px;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;padding-bottom:20px}
+.grid .card,.grid .pub{width:auto}
+@media (min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}}
+.pub .plate{display:flex!important;align-items:center;justify-content:center}
+.pub .plate img{max-width:62%;max-height:70%;width:auto;height:auto;object-fit:contain;display:block;margin:auto}
+.pub{text-align:left}
+.pname{font-weight:700;font-size:1.05rem;margin:0 4px -4px}
+.pub .meta::before{content:none}
+.spoil-note{color:var(--lime);font-weight:600}
+
+.sharefoot{margin:26px 0 10px}
+.sharefoot .share{justify-content:center}
+.tag.na{color:var(--ink2);border-color:#555}
+.row.dead,.hit.dead{opacity:.45}
+.sheet .row.dim{opacity:.45}
+.sheet .row.dim[aria-pressed="true"]{opacity:.75}
+.sheet .rows{max-height:52dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none}
+.sheet .rows::-webkit-scrollbar{display:none}
+.sheet .box{overflow-x:hidden;scrollbar-width:none}
+.sheet .box::-webkit-scrollbar{display:none}
+.row .go{overflow:hidden}
+.sheet .row.here b{color:var(--ink)}
+.tag.reading{color:#fff;border-color:#fff;background:transparent}
+a.tag.link{text-decoration:none;transition:background .15s,color .15s,border-color .15s}
+a.tag.link:hover{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+
+/* featured (single) */
+.feat{display:grid;grid-template-columns:minmax(0,360px) 1fr;gap:40px;align-items:center;width:100%;background:var(--well);border-radius:16px;padding:16px;box-shadow:inset 0 0 0 1px var(--edge);text-align:left}
+.feat .fimg{position:relative;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:var(--skel)}
+.feat .fimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.feat:hover .fimg img{transform:scale(1.03)}
+.feat .ftxt{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:8px 16px 8px 0}
+.feat .ftxt .meta{color:var(--ink2)}
+.feat h1{font-family:var(--display);font-stretch:100%;font-weight:800;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.02;margin:0;letter-spacing:-.025em}
+.feat p{margin:0;font-size:1.15rem;line-height:1.5;color:var(--sub);max-width:60ch}
+.feat .ftxt{width:100%}
+.fdl{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:28px;margin:6px 0 0;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);width:100%}
+.fdl dt{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin-bottom:3px}
+.fdl dd{margin:0;font-size:.9rem;font-weight:600}
+.fthings{width:100%}
+.fthings .eyebrow{display:block;margin-bottom:8px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+.fthings ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fthings li{display:flex;gap:10px;align-items:baseline;background:var(--paper);border-radius:10px;padding:12px}
+.fthings li b{font-family:var(--display);font-stretch:125%;font-weight:900;font-size:1.4rem;line-height:1;color:var(--lime-text)}
+.fthings li span{font-size:.88rem;font-weight:600;line-height:1.3}
+@media (max-width:900px){.fthings ol{grid-template-columns:1fr}.fdl{gap:18px}}
+.feat .fgo{display:inline-flex;align-items:center;gap:12px;margin-top:8px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.feat .fgo svg{width:40px;height:16px;color:var(--lime-text);transition:transform .2s}
+.feat:hover .fgo svg{transform:translateX(5px)}
+@media (max-width:700px){.feat{grid-template-columns:1fr;gap:18px;padding:12px}.feat .fimg{aspect-ratio:4/5}.feat .ftxt{padding:0 6px 8px}}
+
+/* legal + footer */
+.fgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end}
+.fabout{font-size:.9rem;line-height:1.6;color:#a8a8a8;margin:12px 0 0!important;max-width:52ch}
+.fabout .spoil-note{font-weight:700}
+.flinks{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 22px;max-width:none}
+.flinks a,.flinks button{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:#7a7a7a;padding:0;text-align:left;white-space:nowrap}
+.flinks a:hover,.flinks button:hover{color:var(--lime)}
+.fcopy{grid-column:1/-1;max-width:none!important;font-size:.72rem;color:#6f6f6f;margin:0!important;padding-top:16px;border-top:1px solid #222}
+@media (max-width:860px){.fgrid{grid-template-columns:1fr;gap:20px}.flinks{justify-content:flex-start;gap:8px 18px;max-width:none}}
+.legal{max-width:720px;margin:0 auto;padding:6px 0 40px}
+.legal h1{font-size:clamp(2.6rem,9vw,4.2rem);margin:10px 0 6px;border-bottom:1px solid var(--ink);padding-bottom:10px}
+.legal>.meta{color:var(--ink2);margin:0 0 18px}
+.lbody{font-size:1rem;line-height:1.65;color:var(--sub)}
+.lbody h2{font-family:var(--display);font-stretch:100%;font-weight:800;font-size:1.15rem;color:var(--ink);margin:26px 0 6px;letter-spacing:-.01em}
+.lbody p{margin:0 0 12px}
+.lbody ol{margin:0 0 12px;padding-left:20px}
+.lbody li{margin-bottom:6px}
+.lbody a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-underline-offset:3px}
+.inlinebtn{color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-underline-offset:3px;font-size:inherit}
+.mnote,.lnote{font-size:.78rem;color:var(--ink2)}
+.lnote{margin-top:30px;border-top:1px solid var(--rule);padding-top:12px}
+.consent p a{color:var(--ink);text-decoration:underline}
+.loading{padding:80px 0;text-align:center}
+.loading h1{font-size:2.4rem;margin:0 0 8px}
+/* ads */
+.ad{position:relative;margin:28px 0;border-radius:14px;background:var(--well);box-shadow:inset 0 0 0 1px var(--edge);padding:26px 14px 14px;min-height:120px}
+.ad .adlabel{position:absolute;top:8px;left:14px;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.ad.house .adbody{display:flex;align-items:center;gap:14px}
+.ad .hmark{display:flex;gap:3px;flex:none}
+.ad .hmark i{display:block;width:10px;height:24px;border-radius:5px;border:1.5px solid var(--ink2)}
+.ad .hmark i:nth-child(2){background:var(--lime);border-color:var(--lime)}
+.ad .htxt{flex:1;min-width:0}
+.ad .htxt b{display:block;font-size:.98rem}
+.ad .htxt span{display:block;font-size:.82rem;color:var(--ink2);line-height:1.4}
+.ad .hcta{flex:none;height:38px;padding:0 14px;border-radius:999px;border:1.5px solid var(--ink);display:inline-flex;align-items:center;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.ad .hcta:hover{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+@media (max-width:520px){.ad.house .adbody{flex-wrap:wrap;row-gap:12px}.ad .htxt{flex:1 1 calc(100% - 60px)}.ad .hcta{margin-left:42px}}
+/* share */
+.share{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:14px 0 4px}
+.sharelabel{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+.sharebtns{display:flex;gap:8px}
+.sbtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--well);box-shadow:inset 0 0 0 1px #3a3a3a;color:var(--ink);transition:background .15s,color .15s,transform .15s}
+.sbtn svg{width:17px;height:17px}
+.sbtn:hover{background:var(--lime);color:var(--lime-ink)}
+.sbtn:active{transform:scale(.94)}
+.phead+.share,.art .share{justify-content:center}
+.wrap>.share{justify-content:flex-start;margin:14px 0 6px}
+/* consent */
+.consent{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0));z-index:45;max-width:560px;margin:0 auto;background:var(--well);border:1px solid #3a3a3a;border-radius:16px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:12px}
+.consent p{margin:0;font-size:.85rem;color:var(--ink2)}
+.consent p b{color:var(--ink)}
+.consent .cbtns{display:flex;gap:8px;justify-content:flex-end}
+.consent .btn{height:42px;padding:0 18px;font-size:.78rem}
+/* article (recap) */
+.art{max-width:720px;margin:0 auto;padding:6px 0 40px}
+.art .tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:14px 0 16px}
+.art h1{font-family:var(--display);font-stretch:100%;font-weight:800;font-size:clamp(2.3rem,7vw,3.9rem);line-height:1.02;text-align:center;margin:0 auto 14px;max-width:16ch;letter-spacing:-.025em}
+.art .deck{font-size:1.12rem;line-height:1.45;text-align:center;margin:0 auto 14px;max-width:40ch;color:var(--sub)}
+.art .byline{text-align:center;margin-bottom:22px}
+.art .hero{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center;background:var(--black);color:var(--white);border-radius:12px;padding:14px}
+.art .hero .cov{aspect-ratio:2/3;position:relative;overflow:hidden;border-radius:4px}
+.art .hero .cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art .hero dl{margin:0}
+.hinfo{display:flex;flex-direction:column;gap:18px;padding:6px 6px 6px 0;min-width:0}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px}
+.hgrid dd{font-size:.92rem;font-weight:600;line-height:1.3}
+.hgrid dd a{text-decoration:underline;text-decoration-color:#555;text-underline-offset:3px}
+.hgrid dd a:hover{color:var(--lime);text-decoration-color:var(--lime)}
+.hcast{border-top:1px solid #2a2a2a;padding-top:14px}
+.hlab{text-transform:uppercase;font-size:.66rem;letter-spacing:.04em;color:var(--dim);margin-bottom:8px}
+.hcast .cast{margin-top:0}
+.hcast .tag{color:var(--white);border-color:#4a4a4a}
+.art .hero dt{text-transform:uppercase;font-size:.66rem;letter-spacing:.04em;color:var(--dim);margin-bottom:3px}
+.art .hero dd{margin:0}
+@media (max-width:560px){.art .hero{grid-template-columns:120px 1fr;gap:14px 16px;align-items:start}.hinfo{display:contents}.hgrid{grid-template-columns:1fr;gap:8px;align-self:center}.hgrid dd{font-size:.86rem}.hcast{grid-column:1/-1}}
+.body{font-family:var(--serif);font-size:1.16rem;line-height:1.62;margin-top:26px}
+.body p{margin:0 0 1.05em}
+.body p:first-child::first-letter{font-family:var(--display);font-weight:900;font-stretch:125%;float:left;font-size:3.6em;line-height:.82;margin:.06em .08em 0 0;color:var(--lime-text)}
+.h2{margin:34px 0 6px;font-size:clamp(1.9rem,6vw,2.6rem);border-bottom:1px solid var(--ink);padding-bottom:8px}
+.cast{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.cast .tag{height:28px;font-size:.7rem}
+.cast .tag em{font-style:normal;font-weight:400;margin-left:6px;text-transform:none;opacity:.7}
+.nums{list-style:none;margin:0;padding:0}
+.nums li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.nums .n{font-size:3rem;line-height:.8;color:var(--lime-text)}
+.nums b{display:block;font-weight:700;font-size:1.1rem;line-height:1.2;margin-bottom:4px}
+.nums span{color:var(--sub);font-size:.95rem}
+.cliff{margin-top:30px;background:var(--black);color:var(--white);border-radius:12px;padding:22px 20px 24px;text-align:center}
+.cliff .tag{color:var(--lime)}
+.cliff p{font-family:var(--serif);font-size:1.3rem;line-height:1.35;margin:14px auto 0;max-width:30ch}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:999px;font-weight:600;font-size:.9rem;text-transform:uppercase;letter-spacing:.02em;border:1.5px solid var(--ink);text-align:center}
+.btn.solid{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.btn:active{transform:scale(.98)}
+.fb{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:.78rem;text-transform:uppercase}
+.fb button{border:1px solid var(--ink);border-radius:999px;padding:6px 12px;font-size:.72rem;text-transform:uppercase;font-weight:600}
+.fb button.on{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(21,21,21,.55)}
+.sheet .box{width:100%;max-width:520px;background:var(--paper);border:1px solid #3a3a3a;border-radius:18px 18px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom,0));animation:up .3s cubic-bezier(.2,.8,.2,1);max-height:88dvh;overflow-y:auto}
+@media (min-width:600px){.sheet{align-items:center}.sheet .box{border-radius:18px}}
+.sheet h3{margin:0 0 6px;font-size:2rem}
+.sheet p{margin:0 0 10px;color:var(--ink2);font-size:.9rem}
+.sheet .rows .row{grid-template-columns:minmax(56px,auto) 1fr auto;gap:16px;padding:12px 0}
+.row .no{white-space:nowrap;line-height:1}
+.sheet .row[aria-pressed="true"] b{text-decoration:underline;text-underline-offset:3px}
+.sheet .row[aria-pressed="true"] .no{-webkit-text-stroke:0}
+@keyframes up{from{transform:translateY(100%)}}
+@keyframes down{to{transform:translateY(105%)}}
+@keyframes fadein{from{opacity:0}}
+@keyframes fadeout{to{opacity:0}}
+.sheet{animation:fadein .25s ease-out}
+.sheet.closing{animation:fadeout .25s ease-in forwards}
+.sheet.closing .box{animation:down .26s cubic-bezier(.4,0,1,1) forwards}
+.sheet .box{position:relative}
+.sheet .grabzone{margin:-18px -18px 6px;padding:12px 0 14px;touch-action:none;cursor:grab}
+.sheet .grabzone:active{cursor:grabbing}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:#3a3a3a;margin:0 auto}
+.sheet .box.dragging{transition:none!important;animation:none!important}
+.sheet .box.snap{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.xclose{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--well);border:1px solid #3a3a3a;color:var(--ink)}
+.xclose svg{width:18px;height:18px}
+.xclose:hover{border-color:var(--lime)}
+@media (min-width:600px){.sheet .grabzone{display:none}.sheet.closing .box{animation:fadeout .2s ease-in forwards}}
+@media (prefers-reduced-motion:reduce){.sheet .box{animation:none}.bar{transition:none}}
+
+footer{margin-top:48px;background:var(--foot);color:var(--onblack);padding:32px 0 calc(32px + env(safe-area-inset-bottom,0))}
+footer .logo{color:#fff;font-size:1.1rem}
+.fbrand{display:flex;align-items:center;gap:8px}
+footer .mark{display:flex;gap:2px}
+footer .mark i{display:block;width:7px;height:15px;border-radius:4px;border:1.5px solid #fff}
+footer .mark i:nth-child(2){background:var(--lime);border-color:var(--lime)}
+footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:50;padding:12px 18px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.02em;transform:translate(-50%,160%);transition:transform .3s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
+.toast{visibility:hidden}
+.toast{background:var(--lime);color:var(--lime-ink)}
+::selection{background:var(--lime);color:var(--lime-ink)}
+.card:hover,.pub:not([disabled]):hover{box-shadow:inset 0 0 0 2px var(--lime)}
+.sfield{border-bottom-color:var(--lime-text)!important}
+.shead{border-bottom-width:1px}
+.shead h2::after{content:"";display:inline-block;width:.18em;height:.18em;border-radius:50%;background:var(--lime-text);margin-left:.08em;vertical-align:baseline}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="mast" id="mast"><div class="wrap">
+  <span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>
+  <a class="logo" href="#home">Meanwhile…</a>
+  <div class="tools"><button class="pill" data-search aria-label="Search recaps"><span>Search</span><svg><use href="#i-search"/></svg></button></div>
+</div></header>
+<div class="bar" id="bar"><div class="wrap"><a class="brandrow" href="#home" aria-label="Meanwhile home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="logo">Meanwhile…</span></a><div class="tools"><button class="pill" data-search aria-label="Search recaps"><span>Search</span><svg><use href="#i-search"/></svg></button></div></div></div>
+
+<div class="wrap searchbox" id="searchbox" hidden>
+  <div class="sfield"><svg><use href="#i-search"/></svg><input id="q" type="search" placeholder="Search a series or issue" autocomplete="off" aria-label="Search recaps"><button data-closesearch aria-label="Close search"><svg width="22" height="22"><use href="#i-x"/></svg></button></div>
+  <ul class="hits" id="hits"></ul>
+</div>
+
+<main id="app"></main>
+
+<footer><div class="wrap fgrid">
+<div class="fmain"><div class="fbrand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="logo">Meanwhile…</span></div>
+<p class="fabout">Quick recaps of comics you've already read, so you can jump into the next issue without rereading the last one. <b class="spoil-note">Heads up: this is not a spoiler-free site.</b></p></div>
+<nav class="flinks" aria-label="Legal"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#disclaimer">Disclaimer</a><a href="#takedown">Copyright &amp; takedowns</a><a href="#contact">Contact</a><button data-cookieprefs>Cookie settings</button></nav>
+<p class="fcopy">© <span id="yr"></span> Meanwhile…</p></div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+document.documentElement.dataset.theme="dark";
+/* =====================================================================
+   SITE CONFIG — fill these in when you deploy to Vercel.
+   Nothing external loads until the IDs are set AND the visitor accepts.
+   ===================================================================== */
+const CONFIG = {
+  siteUrl: "",                    // e.g. "https://meanwhile.app" — used in share links (falls back to the current URL)
+  siteName: "Meanwhile…",
+  ownerName: "[Your name or company]",   // legal owner shown in the policies
+  contactEmail: "hello@example.com",      // general + privacy contact
+  takedownEmail: "takedown@example.com",  // copyright / removal requests
+  mailingAddress: "[Mailing address]",    // needed if you register a DMCA agent
+  legalUpdated: "November 7, 2026",
+  adsEnabled: false,              // flip to true when you're ready for ads — slots, house ads and AdSense all come back
+  gaId: "",                       // Google Analytics 4 Measurement ID, e.g. "G-ABC123XYZ"
+  adsenseClient: "",              // AdSense publisher ID, e.g. "ca-pub-1234567890123456"
+  adSlots: {                      // AdSense ad-unit IDs per placement (leave "" to show a house ad)
+    "home-mid": "", "home-low": "", "recap-mid": "", "recap-end": "", "list": ""
+  },
+  houseAds: [                     // shown when an AdSense unit isn't set (or is blocked) — your own promos/sponsors
+    {title:"Your comic shop here", text:"Advertise to readers who are about to pick up their next issue.", cta:"Advertise", href:"mailto:ads@example.com"},
+    {title:"Never lose the plot", text:"Bookmark Meanwhile… and check back before every new issue.", cta:"Browse recaps", href:"#all-latest"}
+  ],
+  requireConsent: true            // show the cookie banner before analytics/ads load
+};
+
+/* ---------- consent ---------- */
+const consent = {
+  get(){ return store.get("consent", null); },          // "all" | "essential" | null
+  set(v){ store.set("consent", v); }
+};
+function needsBanner(){ return CONFIG.requireConsent && (CONFIG.gaId || (CONFIG.adsEnabled && CONFIG.adsenseClient)) && consent.get()===null; }
+function canTrack(){ return !CONFIG.requireConsent || consent.get()==="all"; }
+
+/* ---------- analytics (GA4) ---------- */
+const analytics = {
+  ready:false,
+  init(){
+    if(this.ready || !CONFIG.gaId || !canTrack()) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", CONFIG.gaId, { send_page_view:false });
+    const sc=document.createElement("script"); sc.async=true; sc.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(CONFIG.gaId);
+    document.head.appendChild(sc);
+    this.ready=true;
+  },
+  page(name){ if(this.ready) gtag("event","page_view",{ page_title:name, page_location:location.href, page_path:"/"+(location.hash||"#home") }); },
+  event(name, params={}){ if(this.ready) gtag("event", name, params); }
+};
+
+/* ---------- ads ---------- */
+const ads = {
+  scriptLoaded:false, rot:0,
+  init(){
+    if(!CONFIG.adsEnabled || this.scriptLoaded || !CONFIG.adsenseClient || !canTrack()) return;
+    const sc=document.createElement("script"); sc.async=true; sc.crossOrigin="anonymous";
+    sc.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+encodeURIComponent(CONFIG.adsenseClient);
+    document.head.appendChild(sc); this.scriptLoaded=true;
+  },
+  slot(name){ if(!CONFIG.adsEnabled) return ""; return `<aside class="ad" data-ad="${name}" aria-label="Advertisement"><span class="adlabel">Advertisement</span><div class="adbody"></div></aside>`; },
+  fill(root=document){
+    root.querySelectorAll(".ad[data-ad]:not([data-filled])").forEach(el=>{
+      el.dataset.filled="1";
+      const unit=CONFIG.adSlots[el.dataset.ad];
+      const body=el.querySelector(".adbody");
+      if(this.scriptLoaded && unit){
+        body.innerHTML=`<ins class="adsbygoogle" style="display:block" data-ad-client="${CONFIG.adsenseClient}" data-ad-slot="${unit}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+        try{ (window.adsbygoogle=window.adsbygoogle||[]).push({}); }catch(e){}
+      } else {
+        const h=CONFIG.houseAds[this.rot++ % CONFIG.houseAds.length];
+        el.classList.add("house");
+        body.innerHTML=`<div class="hmark" aria-hidden="true"><i></i><i></i><i></i></div><div class="htxt"><b>${esc(h.title)}</b><span>${esc(h.text)}</span></div><a class="hcta" href="${esc(h.href)}" data-adclick="${el.dataset.ad}">${esc(h.cta)}</a>`;
+      }
+      analytics.event("ad_impression_slot",{ slot:el.dataset.ad, type: el.classList.contains("house")?"house":"adsense" });
+    });
+  }
+};
+
+/* ---------- social share ---------- */
+function shareUrl(hash){ const base = CONFIG.siteUrl ? CONFIG.siteUrl.replace(/\/$/,"")+"/" : location.href.split("#")[0]; return base+"#"+hash; }
+function shareBar(hash, text, label="Share this recap"){
+  const u=encodeURIComponent(shareUrl(hash)), t=encodeURIComponent(text);
+  const nets=[
+    ["x","X",`https://twitter.com/intent/tweet?url=${u}&text=${t}`,'<path d="M17.8 3h3.1l-6.8 7.8 8 10.2h-6.3l-4.9-6.4L5.3 21H2.2l7.3-8.3L1.8 3h6.4l4.4 5.9L17.8 3Zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5Z" fill="currentColor"/>'],
+    ["bluesky","Bluesky",`https://bsky.app/intent/compose?text=${t}%20${u}`,'<path d="M6.3 4.2c2.3 1.7 4.8 5.2 5.7 7.1.9-1.9 3.4-5.4 5.7-7.1 1.7-1.2 4.3-2.2 4.3.8 0 .6-.3 5-.5 5.7-.7 2.5-3.2 3.1-5.5 2.7 4 .7 5 3 2.8 5.2-4.2 4.3-6-1.1-6.5-2.5l-.3-.8-.3.8c-.5 1.4-2.3 6.8-6.5 2.5-2.2-2.2-1.2-4.5 2.8-5.2-2.3.4-4.8-.2-5.5-2.7C2.3 10 2 5.6 2 5c0-3 2.6-2 4.3-.8Z" fill="currentColor"/>'],
+    ["facebook","Facebook",`https://www.facebook.com/sharer/sharer.php?u=${u}`,'<path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z" fill="currentColor"/>'],
+    ["reddit","Reddit",`https://www.reddit.com/submit?url=${u}&title=${t}`,'<path d="M21 12.1a2 2 0 0 0-3.4-1.4 9.9 9.9 0 0 0-5.3-1.7l.9-4.2 3 .6a1.4 1.4 0 1 0 .1-.9l-3.3-.7a.4.4 0 0 0-.5.3l-1 4.9a9.9 9.9 0 0 0-5.4 1.7A2 2 0 1 0 4.9 14v.4c0 3 3.2 5.3 7.1 5.3s7.1-2.4 7.1-5.3V14a2 2 0 0 0 1.9-1.9ZM8 13.5a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0Zm7.9 3.8c-1 .9-2.5 1.3-3.9 1.3s-2.9-.4-3.9-1.3a.4.4 0 0 1 .5-.6c.8.7 2.1 1 3.4 1s2.6-.3 3.4-1a.4.4 0 0 1 .5.6Zm-.3-2.4a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Z" fill="currentColor"/>'],
+    ["threads","Threads",`https://www.threads.net/intent/post?text=${t}%20${u}`,'<path d="M16.4 11.2c-.1 0-.2-.1-.3-.1-.2-3-1.8-4.7-4.6-4.7h-.1c-1.6 0-3 .7-3.9 2l1.5 1c.6-1 1.6-1.2 2.4-1.2 1 0 1.7.3 2.2.9.3.4.6 1 .7 1.7-.8-.1-1.6-.2-2.5-.1-2.5.1-4.1 1.6-4 3.7.1 1.1.6 2 1.5 2.6.8.5 1.8.7 2.8.7 1.4-.1 2.5-.6 3.2-1.6.6-.7.9-1.7 1-2.9.7.4 1.2 1 1.4 1.7.4 1.2.4 3-1.1 4.5-1.3 1.3-2.9 1.9-5.2 1.9-2.6 0-4.5-.8-5.8-2.5-1.2-1.5-1.8-3.7-1.8-6.5s.6-5 1.8-6.5c1.3-1.6 3.2-2.5 5.8-2.5 2.6 0 4.6.9 5.9 2.5.6.8 1.1 1.8 1.4 3l1.8-.5c-.4-1.4-1-2.6-1.8-3.6-1.7-2.1-4.2-3.2-7.3-3.2-3.2 0-5.6 1.1-7.3 3.2C3.1 7.4 2.3 10 2.3 13.1c0 3.1.8 5.7 2.3 7.6 1.6 2 4.1 3.1 7.3 3.1 2.8 0 4.8-.8 6.5-2.4 2.2-2.2 2.2-5 1.4-6.8-.5-1.3-1.6-2.4-3.4-3.4Zm-4.6 4.6c-1.1.1-2.2-.4-2.3-1.4 0-.8.5-1.6 2.3-1.7h.6c.6 0 1.2.1 1.7.2-.2 2.4-1.4 2.9-2.3 2.9Z" fill="currentColor"/>']
+  ];
+  return `<div class="share" aria-label="${esc(label)}"><span class="sharelabel">${esc(label)}</span><div class="sharebtns">
+    ${nets.map(([id,name,href,ic])=>`<a class="sbtn" href="${href}" target="_blank" rel="noopener" data-share="${id}" aria-label="Share on ${name}" title="${name}"><svg viewBox="0 0 24 24">${ic}</svg></a>`).join("")}
+    <button class="sbtn" data-copy="${esc(shareUrl(hash))}" data-share="copy" aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div></div>`;
+}
+
+/* ---------- consent banner ---------- */
+function showConsent(){
+  if(!needsBanner() || document.getElementById("consent")) return;
+  const el=document.createElement("div"); el.id="consent"; el.className="consent";
+  el.innerHTML=`<p><b>Cookies.</b> ${CONFIG.adsEnabled?"We use analytics and ads cookies to understand what people read and keep the site free.":"We use analytics cookies to understand what people read."} You can say no and still use everything. <a href="#privacy">Privacy policy</a></p><div class="cbtns"><button class="btn" data-consent="essential">No thanks</button><button class="btn solid" data-consent="all">Accept</button></div>`;
+  document.body.appendChild(el);
+}
+function fallbackCopy(txt){ const ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); toast("Link copied"); }catch(e){ toast("Copy: "+txt); } ta.remove(); }
+function startTracking(){ analytics.init(); ads.init(); }
+
+
+/* ---------- data (loaded from Supabase) ---------- */
+const SB_URL = "https://crlbkiodcguweckdmexc.supabase.co";
+const SB_KEY = "sb_publishable_L10DVFZwuiE3fd9puJ0Eqw_kjpTqua-";
+let SERIES = [], PUBLISHERS = [];
+async function sbFetch(path, opts={}){
+  const r = await fetch(`${SB_URL}/rest/v1/${path}`, { ...opts, headers:{ apikey:SB_KEY, Authorization:`Bearer ${SB_KEY}`, "Content-Type":"application/json", ...(opts.headers||{}) } });
+  if(!r.ok) throw new Error(await r.text());
+  return r.status===201||r.status===204 ? null : r.json();
+}
+async function loadData(){
+  const [pubs, series, issues] = await Promise.all([
+    sbFetch("publishers?select=*&order=name"),
+    sbFetch("series?select=*"),
+    sbFetch("issues?select=*&status=eq.published&order=published_at.asc")
+  ]);
+  PUBLISHERS = pubs.map(p=>({ id:p.id, name:p.name, logo:p.logo_url }));
+  const pname = Object.fromEntries(PUBLISHERS.map(p=>[p.id,p.name]));
+  const byS = {};
+  issues.forEach(i=>{ (byS[i.series_id] ||= []).push({
+    n:i.number, title:i.title||"", cover:i.cover_url, publishedAt:i.published_at,
+    recap:{ deck:i.deck, standard:i.paragraphs, cast:i.cast_list.map(c=>[c.name,c.role]), things:i.things.map(t=>({b:t.title,s:t.text})), cliff:i.cliffhanger }
+  }); });
+  // order series by their most recent published issue so "Latest" stays newest-last in allIssues()
+  SERIES = series.map(s=>({ id:s.id, title:s.title, year:s.year, publisher:pname[s.publisher_id]||s.publisher_id, publisherId:s.publisher_id,
+      creators:s.writer||"", art:s.artist||"", last:s.last_issue||undefined, issues:(byS[s.id]||[]).sort((a,b)=>a.n-b.n) }))
+    .filter(s=>s.issues.length)
+    .sort((a,b)=>Math.max(...a.issues.map(i=>+new Date(i.publishedAt)))-Math.max(...b.issues.map(i=>+new Date(i.publishedAt))));
+}
+const seriesBy = id=>SERIES.filter(s=>s.publisherId===id);
+const activePubs = ()=>PUBLISHERS.filter(pb=>seriesBy(pb.id).length);
+const recapCount = id=>seriesBy(id).reduce((a,s)=>a+s.issues.filter(i=>i.recap).length,0);
+
+/* per-viewer state */
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem("prev:"+k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem("prev:"+k, JSON.stringify(v)); }catch(e){} }
+};
+let readSet = new Set(store.get("read", []));
+const saveRead = ()=>store.set("read",[...readSet]);
+const key = (s,n)=>s.id+"-"+n;
+
+const app = document.getElementById("app");
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const findSeries = id=>SERIES.find(s=>s.id===id);
+const allIssues = ()=>SERIES.flatMap(s=>s.issues.map(i=>({s,i}))).sort((a,b)=>new Date(a.i.publishedAt)-new Date(b.i.publishedAt));
+const recapsIn = s=>s.issues.filter(i=>i.recap).length;
+const issueTitle = (s,i)=> i.title || `Issue #${i.n}`;
+const coverOf = s=>{ const c=[...s.issues].reverse().find(i=>i.cover); return c&&c.cover; };
+const img = (src,n)=> src ? `<img src="${src}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">` : `<div class="ph" style="position:absolute;inset:0"><span>#${n}</span></div>`;
+let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
+function go(h){ closeSearch(); if(location.hash==="#"+h) route(); else location.hash=h; }
+
+const ARROW = `<svg viewBox="0 0 40 16" aria-hidden="true"><path d="M1 8h36M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter"/></svg>`;
+const recapCard = ({s,i})=>`<button class="card" data-href="${key(s,i.n)}"><div class="img">${img(i.cover,i.n)}</div><b>${esc(s.title)} #${i.n}</b><span class="meta">${esc(s.publisher)}</span></button>`;
+const seriesCard = s=>{const r=recapsIn(s); return `<button class="card" data-href="${s.id}"><div class="img">${img(coverOf(s),s.issues.length)}</div><b>${esc(s.title)}</b><span class="meta">${esc(s.publisher)} · ${r} recap${r===1?"":"s"}</span></button>`;};
+const pubCard = pb=>{const n=seriesBy(pb.id).length, r=recapCount(pb.id); return `<button class="pub" ${n?`data-href="${pb.id}"`:"disabled"}><div class="plate disp">${pb.logo?`<img src="${pb.logo}" alt="${esc(pb.name)}" onerror="this.replaceWith(document.createTextNode(this.alt))">`:esc(pb.name)}</div><b class="pname">${esc(pb.name)}</b><span class="meta" style="color:var(--ink2)">${n?`${n} series · ${r} recap${r===1?"":"s"}`:"Coming soon"}</span></button>`;};
+const LISTS = {
+  "all-latest":{t:"Latest", sub:()=>`${allIssues().filter(x=>x.i.recap).length} recaps · newest first`, items:()=>allIssues().filter(x=>x.i.recap).reverse().map(recapCard)},
+  "all-series":{t:"Series", sub:()=>`${SERIES.length} series · A–Z`, items:()=>[...SERIES].sort((a,b)=>a.title.localeCompare(b.title)).map(seriesCard)},
+  "all-publishers":{t:"Publishers", sub:()=>`${activePubs().length} publishers`, items:()=>activePubs().sort((a,b)=>a.name.localeCompare(b.name)).map(pubCard)}
+};
+function listView(id){
+  const L=LISTS[id];
+  app.innerHTML = `<div class="wrap">
+    <button class="crumb" data-href="home"><svg><use href="#i-back"/></svg>Home</button>
+    <div class="lhead"><h1 class="cond">${L.t}</h1><span class="meta">${L.sub()}</span></div>
+    <div class="grid ${id==="all-publishers"?"pubs":""}">${L.items().join("")}</div>
+    ${ads.slot("list")}
+  </div>`;
+}
+/* ---------- home ---------- */
+function home(){
+  const latest = allIssues().filter(x=>x.i.recap).reverse();
+  const lead = latest[0];
+  const newestPer = SERIES.slice().reverse().map(s=>{ const i=[...s.issues].reverse().find(x=>x.recap); return i&&{s,i}; }).filter(Boolean);
+  const featured = [...newestPer, ...latest.filter(x=>!newestPer.some(y=>y.s===x.s&&y.i===x.i))];
+  const sideItems = [
+    ...featured.map(({s,i})=>({href:key(s,i.n), meta:`${esc(s.publisher)}`, title:`${esc(s.title)} #${i.n}${i.title?`: ${esc(i.title)}`:""}`})),
+  ].slice(0,5);
+  app.innerHTML = `
+  <div class="wrap">${lead?`<button class="feat" data-href="${key(lead.s,lead.i.n)}">
+    <div class="fimg">${img(lead.i.cover,lead.i.n)}</div>
+    <div class="ftxt">
+      <span class="tag solid">Featured</span>
+      <span class="meta">${esc(lead.s.publisher)}</span>
+      <h1>${esc(lead.s.title)} #${lead.i.n}</h1>
+      <p>${esc(lead.i.recap.deck)}</p>
+      <dl class="fdl"><div><dt>Writing</dt><dd>${esc(lead.s.creators)}</dd></div><div><dt>Art</dt><dd>${esc(lead.s.art)}</dd></div><div><dt>Year</dt><dd>${lead.s.year}</dd></div></dl>
+      <div class="fthings"><span class="eyebrow">Three things to remember</span><ol>${lead.i.recap.things.map((t,k)=>`<li><b>${k+1}</b><span>${esc(t.b)}</span></li>`).join("")}</ol></div>
+      <span class="fgo">Read the recap <svg viewBox="0 0 40 16" aria-hidden="true"><path d="M1 8h36M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter"/></svg></span>
+    </div>
+  </button>`:""}</div>
+
+  <div class="wrap">${ads.slot("home-mid")}</div>
+
+  <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Latest</h2><a class="seeall" href="#all-latest">See all <span>${latest.length}</span>${ARROW}</a></div></div>
+    <div class="rail">${latest.filter(x=>x!==lead).map(recapCard).join("")}</div>
+  </section>
+
+  <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Series</h2><a class="seeall" href="#all-series">See all <span>${SERIES.length}</span>${ARROW}</a></div></div>
+    <div class="rail">${SERIES.map(seriesCard).join("")}</div>
+  </section>
+
+  <div class="wrap">${ads.slot("home-low")}</div>
+
+  <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Publishers</h2><a class="seeall" href="#all-publishers">See all <span>${activePubs().length}</span>${ARROW}</a></div></div>
+    <div class="rail">${activePubs().map(pubCard).join("")}</div>
+  </section>`;
+}
+
+/* ---------- publisher ---------- */
+function publisherView(pb){
+  const list = seriesBy(pb.id);
+  const pool = list.flatMap(s=>s.issues.filter(i=>i.cover).map(i=>i.cover));
+  const bg = pool.length ? pool[Math.floor(Math.random()*pool.length)] : null;
+  app.innerHTML = `<div class="wrap crumbwrap">
+    <button class="crumb" data-href="home"><svg><use href="#i-back"/></svg>Home</button>
+  </div>
+    <div class="pubhero">${bg?`<img src="${bg}" alt="">`:""}<div class="shade"></div>
+      <div class="txt wrap"><span class="eyebrow2">Browse</span><h1 class="disp">${esc(pb.name)}</h1><p>${list.length} series · ${recapCount(pb.id)} recap${recapCount(pb.id)===1?"":"s"}</p></div></div>
+  <div class="wrap">
+    <ul class="rows">${list.map(s=>`<li><button class="row" data-href="${s.id}"><div class="thumb">${img(coverOf(s),s.issues.length)}</div><div><b>${esc(s.title)}</b><div class="meta">${s.year} · ${recapsIn(s)} recap${recapsIn(s)===1?"":"s"}</div></div><span class="go" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M1 8h36M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter"/></svg></span></button></li>`).join("")}</ul>
+  </div>`;
+}
+
+
+/* earlier issues we don't have yet: listed individually if few, collapsed into one row if many */
+function issueRows(s){ return s.issues.filter(i=>i.recap); }
+/* ---------- series ---------- */
+function seriesView(s){
+  const done = s.issues.filter(i=>readSet.has(key(s,i.n))).length;
+  app.innerHTML = `<div class="wrap">
+    <button class="crumb" data-href="${s.publisherId}"><svg><use href="#i-back"/></svg>${esc(s.publisher)}</button>
+    <div class="phead"><div class="cov">${img(coverOf(s),s.issues.length)}</div><div><a class="tag link" href="#${s.publisherId}">${esc(s.publisher)}</a><h1 class="cond">${esc(s.title)}</h1><p>${s.year} · ${esc(s.publisher)} · ${esc(s.creators)} · art by ${esc(s.art)}</p></div></div>
+    <ul class="rows">${issueRows(s).map(i=>{ if(i.missing) return `<li><div class="row dead"><span class="no disp">${i.range?`#${i.range[0]}–${i.range[1]}`:`#${i.n}`}</span><div><b>${i.range?`Issues #${i.range[0]}–#${i.range[1]}`:`Issue #${i.n}`}</b></div><span class="tag na">Unavailable</span></div></li>`; const r=readSet.has(key(s,i.n));
+      return `<li><button class="row ${i.recap?"":"dead"}" ${i.recap?`data-href="${key(s,i.n)}"`:"disabled"}><span class="no disp">#${i.n}</span><div><b>${esc(issueTitle(s,i))}</b></div>${i.recap?`<span class="go" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M1 8h36M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter"/></svg></span>`:`<span class="tag na">Unavailable</span>`}</button></li>`;}).join("")}</ul>
+    <div class="sharefoot">${shareBar(s.id, `${s.title} recaps on Meanwhile…`, "Share this series")}</div>
+  </div>`;
+}
+
+/* ---------- recap ---------- */
+function recapView(s,i){
+  const r = i.recap, isRead = readSet.has(key(s,i.n));
+  app.innerHTML = `<div class="wrap"><article class="art">
+    <button class="crumb" data-href="${s.id}"><svg><use href="#i-back"/></svg>${esc(s.title)}</button>
+    <div class="tags"><a class="tag link" href="#${s.publisherId}">${esc(s.publisher)}</a><a class="tag link" href="#${s.id}">${esc(s.title)}</a></div>
+    <h1>${esc(s.title)} #${i.n}</h1>
+    <p class="deck">${esc(r.deck)}</p>
+    
+    <div class="hero"><div class="cov">${img(i.cover,i.n)}</div>
+      <div class="hinfo">
+        <dl class="hgrid">
+          <div><dt>Series</dt><dd><a href="#${s.id}">${esc(s.title)}</a></dd></div>
+          <div><dt>Issue</dt><dd>#${i.n}${i.title?` · ${esc(i.title)}`:""}</dd></div>
+          <div><dt>Publisher</dt><dd><a href="#${s.publisherId}">${esc(s.publisher)}</a></dd></div>
+          <div><dt>Year</dt><dd>${s.year}</dd></div>
+          <div><dt>Writing</dt><dd>${esc(s.creators)}</dd></div>
+          <div><dt>Art</dt><dd>${esc(s.art)}</dd></div>
+        </dl>
+        <div class="hcast"><dt class="hlab">Characters</dt><div class="cast">${r.cast.map(c=>`<span class="tag">${c[0]}<em>${c[1]}</em></span>`).join("")}</div></div>
+      </div></div>
+    <div class="body">${r.standard.map(p=>`<p>${p}</p>`).join("")}</div>
+    ${ads.slot("recap-mid")}
+    <h2 class="h2 cond">Three things to remember</h2>
+    <ol class="nums">${r.things.map((t,k)=>`<li><span class="n disp">${k+1}</span><div><b>${t.b}</b><span>${t.s}</span></div></li>`).join("")}</ol>
+    <div class="cliff"><span class="tag">Where we left off</span><p>${r.cliff}</p></div>
+    <div class="actions">
+      ${issueRows(s).length>1?`<button class="btn solid" data-catch>Missed more? Catch me up</button>`:""}
+    </div>
+    <div class="fb">Was this accurate? <button data-fb="y">Yes</button><button data-fb="n">Something's off</button></div>
+    ${shareBar(key(s,i.n), `Catch up on ${s.title} #${i.n} in 45 seconds`, "Know someone reading this?")}
+    ${ads.slot("recap-end")}
+  </article></div>`;
+  app.dataset.cur = key(s,i.n);
+}
+
+function closeSheet(el){
+  if(el.classList.contains("closing")) return;
+  el.classList.add("closing");
+  const done=()=>el.remove();
+  el.querySelector(".box").addEventListener("animationend",done,{once:true});
+  setTimeout(done,400);
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ const sh=document.querySelector(".sheet"); if(sh) closeSheet(sh); } });
+function catchSheet(s,i){
+  const el = document.createElement("div");
+  el.className="sheet";
+  el.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-label="Catch me up"><div class="grabzone" aria-hidden="true"><div class="grab"></div></div><h3 class="cond">Catch me up</h3><p>Every issue of ${esc(s.title)}. Tap any available recap to read it.</p>
+    <ul class="rows">${issueRows(s).map(x=>{
+      if(x.range) return `<li><div class="row dim"><span class="no disp">#${x.range[0]}–${x.range[1]}</span><div><b>Issues #${x.range[0]}–#${x.range[1]}</b></div><span class="tag na">Unavailable</span></div></li>`;
+      if(!x.recap) return `<li><div class="row dim"><span class="no disp">#${x.n}</span><div><b>${x.missing?`Issue #${x.n}`:esc(issueTitle(s,x))}</b></div><span class="tag na">Unavailable</span></div></li>`;
+      if(x.n===i.n) return `<li><div class="row here" aria-current="page"><span class="no disp">#${x.n}</span><div><b>${x.missing?`Issue #${x.n}`:esc(issueTitle(s,x))}</b></div><span class="tag reading">Reading</span></div></li>`;
+      return `<li><button class="row" data-href="${key(s,x.n)}"><span class="no disp">#${x.n}</span><div><b>${x.missing?`Issue #${x.n}`:esc(issueTitle(s,x))}</b></div><span class="go" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M1 8h36M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter"/></svg></span></button></li>`;
+    }).join("")}</ul>
+    <button class="btn solid" style="width:100%;margin-top:14px" data-close>Done</button></div>`;
+  document.body.appendChild(el);
+  document.body.style.overflow="hidden";
+  (()=>{ const box=el.querySelector(".box"), zone=el.querySelector(".grabzone"); if(!zone) return;
+    let y0=null,t0=0,dy=0;
+    zone.addEventListener("pointerdown",e=>{ y0=e.clientY; t0=performance.now(); dy=0; box.classList.remove("snap"); box.classList.add("dragging"); zone.setPointerCapture(e.pointerId); });
+    zone.addEventListener("pointermove",e=>{ if(y0===null) return; dy=Math.max(0,e.clientY-y0); box.style.transform=`translateY(${dy}px)`; el.style.background=`rgba(21,21,21,${.55*Math.max(0,1-dy/box.offsetHeight)})`; });
+    const end=()=>{ if(y0===null) return; const v=dy/Math.max(1,performance.now()-t0); y0=null; box.classList.remove("dragging");
+      if(dy>box.offsetHeight*0.28 || v>0.6){ box.classList.add("snap"); box.style.transform="translateY(105%)"; el.style.transition="background .25s"; el.style.background="rgba(21,21,21,0)"; setTimeout(()=>el.remove(),260); }
+      else { box.classList.add("snap"); box.style.transform=""; el.style.background=""; } };
+    zone.addEventListener("pointerup",end); zone.addEventListener("pointercancel",end);
+  })();
+  new MutationObserver((m,o)=>{ if(!document.body.contains(el)){ document.body.style.overflow=""; o.disconnect(); } }).observe(document.body,{childList:true});
+  el.addEventListener("click", e=>{
+    const b = e.target.closest("button");
+    if(e.target===el || (b && b.hasAttribute("data-close"))){ closeSheet(el); return; }
+    if(b && b.dataset.from){
+      el.querySelectorAll("[data-from]").forEach(x=>x.setAttribute("aria-pressed", x===b));
+      const n=+b.dataset.from; const lacking=[]; for(let k=n;k<=i.n;k++){ const f=s.issues.find(x=>x.n===k); if(!f||!f.recap) lacking.push(k); } const missing = lacking.length>3 ? ["#"+lacking[0]+"–#"+lacking[lacking.length-1]] : lacking.map(k=>"#"+k);
+      el.querySelector("[data-msg]").textContent = n===i.n ? `Just issue #${i.n}: that's the recap on this page.` :
+        missing.length ? `Recaps for ${missing.join(", ")} aren't written yet, so for now only #${i.n} is available.` : `You'll get #${n}–#${i.n} in one recap.`;
+    }
+  });
+}
+
+/* ---------- search ---------- */
+const sb = document.getElementById("searchbox"), q = document.getElementById("q"), hits = document.getElementById("hits");
+function openSearch(){ sb.hidden=false; window.scrollTo({top:0}); q.focus(); }
+function closeSearch(){ sb.hidden=true; q.value=""; hits.innerHTML=""; }
+function search(v){
+  const t = v.trim().toLowerCase();
+  if(!t){ hits.innerHTML=""; return; }
+  const num = (t.match(/#?\s*(\d+)\s*$/)||[])[1];
+  const words = t.replace(/#?\s*\d+\s*$/,"").trim();
+  const found = allIssues().filter(({s,i})=>i.recap).filter(({s,i})=>{
+    const name = s.title.toLowerCase();
+    const okName = !words || name.includes(words) || words.split(/\s+/).every(w=>name.includes(w)) || (i.title||"").toLowerCase().includes(words);
+    return okName && (!num || +num===i.n);
+  });
+  hits.innerHTML = found.length ? found.slice(0,6).map(({s,i})=>`<li><button class="hit ${i.recap?"":"dead"}" ${i.recap?`data-href="${key(s,i.n)}"`:`data-href="${s.id}"`}><div class="thumb sm">${img(i.cover,i.n)}</div><div><span class="meta">${esc(s.publisher)}</span><b>${esc(s.title)} #${i.n}</b></div>${i.recap?"":`<span class="tag na">Unavailable</span>`}</button></li>`).join("") :
+    `<li class="none"><b>No recaps for "${esc(v)}" yet.</b><br>The library is just getting started.<br><button class="btn" style="height:40px;padding:0 16px;display:inline-flex" data-request="${esc(v)}">Ask for this one</button></li>`;
+}
+q.addEventListener("input", ()=>search(q.value));
+let sTimer; q.addEventListener("input", ()=>{ clearTimeout(sTimer); sTimer=setTimeout(()=>{ if(q.value.trim().length>1) analytics.event("search",{ search_term:q.value.trim() }); },1200); });
+
+
+/* ---------- legal pages ---------- */
+const mail = e=>`<a href="mailto:${esc(e)}">${esc(e)}</a>`;
+const LEGAL = {
+  terms: {t:"Terms of Use", body:()=>`
+    <p>These terms apply to your use of Meanwhile… (the "Site"), run by ${esc(CONFIG.ownerName)} ("we", "us"). By using the Site you agree to them. If you don't agree, please don't use the Site.</p>
+    <h2>What the Site is</h2>
+    <p>Meanwhile… publishes short recaps of comic book issues so readers can remember what happened before picking up the next one. It is an independent fan resource and is not affiliated with, endorsed by or sponsored by any publisher, creator or rights holder.</p>
+    <h2>Spoilers</h2>
+    <p>This is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings. Only read recaps of issues you've already read or don't mind having spoiled.</p>
+    <h2>Accuracy and AI assistance</h2>
+    <p>Recaps are written with the help of AI tools and reviewed by us, but they may still contain mistakes, such as misidentified characters or misread scenes. Recaps are provided "as is" for general information and entertainment. They are not a substitute for reading the comics. If you spot an error, use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <h2>Intellectual property</h2>
+    <p>Comic titles, characters, story elements, cover art and publisher logos belong to their respective owners. We use cover thumbnails and publisher names and logos only to identify the works being discussed. Our recaps are original summaries written in our own words. We do not host or distribute comic pages, and nothing on the Site is a replacement for buying the comics.</p>
+    <p>The Site's design, code and original recap text belong to ${esc(CONFIG.ownerName)}. You may share links to recaps and quote short excerpts with credit. Please don't copy recaps wholesale or republish them elsewhere.</p>
+    <p>If you are a rights holder and believe something on the Site should be removed, see <a href="#takedown">Copyright &amp; takedowns</a>.</p>
+    <h2>Acceptable use</h2>
+    <p>Please don't scrape the Site in bulk, attempt to disrupt it, or use it for anything unlawful.</p>
+    <h2>Third-party links and services</h2>
+    <p>The Site links to and uses third-party services (for example social networks for sharing, and analytics). We aren't responsible for their content or practices. Their own terms apply.</p>
+    <h2>No warranties; limitation of liability</h2>
+    <p>The Site is provided "as is" and "as available" without warranties of any kind. To the fullest extent permitted by law, we are not liable for any indirect, incidental or consequential damages arising from your use of the Site.</p>
+    <h2>Changes</h2>
+    <p>We may update these terms from time to time. The date at the top shows when they last changed. Continuing to use the Site after a change means you accept the updated terms.</p>
+    <h2>Contact</h2>
+    <p>Questions about these terms: ${mail(CONFIG.contactEmail)}.</p>`},
+  privacy: {t:"Privacy Policy", body:()=>`
+    <p>This policy explains what information Meanwhile… (run by ${esc(CONFIG.ownerName)}) collects, how it's used, and the choices you have. We keep it short because we collect very little.</p>
+    <h2>What we don't collect</h2>
+    <p>There are no accounts, no sign-ups and no comments, so we don't ask for your name, email or any other personal details to use the Site.</p>
+    <h2>Stored on your device</h2>
+    <p>The Site saves a few settings in your browser's local storage so it works the way you left it, for example your cookie choice. This stays on your device, is not sent to us, and you can clear it at any time in your browser settings.</p>
+    <h2>Analytics</h2>
+    <p>If you accept cookies, we use Google Analytics to understand how the Site is used: which pages are viewed, searches made on the Site, shares, and general information such as browser type, device, approximate location (country or city) and how you arrived. Google sets cookies to do this. We use this only to improve the Site and don't use it to identify you personally. If you choose "No thanks", Google Analytics is not loaded.</p>
+    <p>Learn more about how Google uses data at <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">policies.google.com/technologies/partner-sites</a>.</p>
+    ${CONFIG.adsEnabled?`<h2>Advertising</h2><p>If you accept cookies, we show ads from Google AdSense, which may use cookies to show ads based on your visits to this and other sites. You can manage personalised ads at <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>.</p>`:""}
+    <h2>Feedback and requests</h2>
+    <p>If you click "Was this accurate?" or ask for a comic to be added, we store just that answer or search text so we can fix recaps and decide what to add next. Nothing that identifies you is attached.</p>
+    <h2>Sharing buttons</h2>
+    <p>Share buttons are plain links. Nothing loads from social networks until you click one, at which point that network's own privacy policy applies.</p>
+    <h2>Hosting</h2>
+    <p>Like any website, our hosting provider automatically processes technical data such as IP addresses to deliver pages and protect against abuse.</p>
+    <h2>Your choices and rights</h2>
+    <p>You can change your cookie choice at any time with <button class="inlinebtn" data-cookieprefs>Cookie settings</button>. You can also block cookies in your browser. Depending on where you live (for example the EU, UK or California), you may have rights to access, delete or object to the processing of personal data. Because we hold almost none, most requests will be about analytics data. Contact us and we'll help.</p>
+    <h2>Children</h2>
+    <p>The Site isn't directed at children under 13, and we don't knowingly collect their personal information.</p>
+    <h2>Changes</h2>
+    <p>We'll update this policy if what we collect changes. The date at the top shows the latest version.</p>
+    <h2>Contact</h2>
+    <p>Privacy questions: ${mail(CONFIG.contactEmail)}.</p>`},
+  takedown: {t:"Copyright & Takedowns", body:()=>`
+    <p>We respect the rights of creators and publishers. Meanwhile… shows small cover thumbnails and publisher logos to identify the comics we recap, and writes original summaries in its own words. We don't host comic pages.</p>
+    <p>If you own the rights to something on the Site and want it changed or removed, we'll act quickly, usually within a few business days.</p>
+    <h2>How to send a request</h2>
+    <p>Email ${mail(CONFIG.takedownEmail)} with:</p>
+    <ol>
+      <li>Your name, organisation and contact details.</li>
+      <li>The work you own (for example the comic title and issue, or the cover).</li>
+      <li>The page address on Meanwhile… where it appears.</li>
+      <li>What you'd like us to do (remove the cover, remove the recap, correct something).</li>
+      <li>A statement that you have a good-faith belief the use isn't authorised by the owner, its agent or the law.</li>
+      <li>A statement that the information is accurate and, under penalty of perjury, that you are the owner or authorised to act for the owner.</li>
+      <li>Your physical or electronic signature.</li>
+    </ol>
+    <h2>Counter-notice</h2>
+    <p>If something was removed by mistake, the affected party can send a counter-notice to the same address explaining why, with the details required by law.</p>
+    <h2>Corrections</h2>
+    <p>Not a copyright issue, just an error in a recap? Use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <h2>Designated agent</h2>
+    <p>${esc(CONFIG.ownerName)}<br>${esc(CONFIG.mailingAddress)}<br>${mail(CONFIG.takedownEmail)}</p>`},
+  disclaimer: {t:"Disclaimer", body:()=>`
+    <h2>Spoilers</h2>
+    <p>Meanwhile… is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings.</p>
+    <h2>Not affiliated</h2>
+    <p>Meanwhile… is an independent fan site. It is not affiliated with, endorsed by or sponsored by DC, Image or any other publisher, creator or rights holder.</p>
+    <h2>Ownership</h2>
+    <p>Comic titles, characters, story elements, cover art and publisher logos are the property of their respective owners. Cover thumbnails and logos are shown only to identify the comics being discussed. Recaps are original summaries written in our own words and are not a substitute for reading the comics.</p>
+    <h2>Accuracy</h2>
+    <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors. If you spot one, use the "Something's off" button on the recap or <a href="#contact">contact us</a>.</p>
+    <h2>Rights holders</h2>
+    <p>If you own something shown here and want it changed or removed, see <a href="#takedown">Copyright &amp; takedowns</a>.</p>`},
+  contact: {t:"Contact", body:()=>`
+    <p>Questions, corrections or ideas for comics to recap: ${mail(CONFIG.contactEmail)}.</p>
+    <p>Rights holders with removal requests: please see <a href="#takedown">Copyright &amp; takedowns</a> or email ${mail(CONFIG.takedownEmail)}.</p>
+    <p class="mnote">Some browsers and apps can't open email links directly. If nothing happens, copy the address above.</p>`}
+};
+function legalView(id){
+  const L=LEGAL[id];
+  app.innerHTML=`<div class="wrap"><article class="legal">
+    <button class="crumb" data-href="home"><svg><use href="#i-back"/></svg>Home</button>
+    <h1 class="cond">${L.t}</h1>
+    ${id==="contact"?"":`<p class="meta">Last updated ${esc(CONFIG.legalUpdated)}</p>`}
+    <div class="lbody">${L.body()}</div>
+    <p class="lnote">This page is a general template, not legal advice.</p>
+  </article></div>`;
+}
+/* ---------- routing ---------- */
+function route(){
+  document.querySelectorAll(".sheet").forEach(x=>x.remove());
+  const h = location.hash.slice(1) || "home";
+  const pb = PUBLISHERS.find(x=>x.id===h), s = findSeries(h);
+  if(LEGAL[h]) legalView(h);
+  else if(LISTS[h]) listView(h);
+  else if(pb && seriesBy(pb.id).length) publisherView(pb);
+  else if(s) seriesView(s);
+  else {
+    const m = h.match(/^(.*)-(\d+)$/), ss = m && findSeries(m[1]), ii = ss && ss.issues.find(x=>x.n===+m[2]);
+    if(ii && ii.recap) recapView(ss,ii);
+    else if(ii) seriesView(ss);
+    else home();
+  }
+  window.scrollTo(0,0);
+  ads.fill(app);
+  analytics.page(document.querySelector("#app h1")?.textContent || "Home");
+  const cur=location.hash.slice(1); const mm=cur.match(/^(.*)-(\d+)$/);
+  if(mm && findSeries(mm[1])) analytics.event("recap_view",{ series:findSeries(mm[1]).title, issue:+mm[2] });
+}
+window.addEventListener("hashchange", route);
+
+document.addEventListener("click", e=>{
+  const sh = e.target.closest("[data-share]");
+  if(sh){ analytics.event("share",{ method:sh.dataset.share, content: location.hash.slice(1)||"home" });
+    if(sh.dataset.copy){ e.preventDefault();
+      const done=()=>toast("Link copied");
+      try{ navigator.clipboard.writeText(sh.dataset.copy).then(done,()=>fallbackCopy(sh.dataset.copy)); }catch(err){ fallbackCopy(sh.dataset.copy); }
+      return; }
+    return; }
+  const ac = e.target.closest("[data-adclick]"); if(ac){ analytics.event("ad_click",{ slot:ac.dataset.adclick, type:"house" }); }
+  if(e.target.closest("[data-cookieprefs]")){ store.set("consent", null); document.getElementById("consent")?.remove();
+    if(needsBanner()) showConsent(); else toast("No tracking is set up yet"); return; }
+  const cb = e.target.closest("[data-consent]");
+  if(cb){ consent.set(cb.dataset.consent); document.getElementById("consent")?.remove(); if(canTrack()){ startTracking(); analytics.page(document.querySelector("#app h1")?.textContent||"Home"); } return; }
+  const t = e.target.closest("button"); if(!t) return;
+  if(t.hasAttribute("data-search")){ sb.hidden ? openSearch() : closeSearch(); return; }
+  if(t.hasAttribute("data-closesearch")){ closeSearch(); return; }
+  if(t.dataset.href){ go(t.dataset.href); return; }
+  if(t.dataset.request!==undefined){ sbFetch("requests",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({query:t.dataset.request.slice(0,200)})}).catch(()=>{}); toast("Noted — added to the list"); return; }
+  if(!app.contains(t)) return;
+  const cur = app.dataset.cur && app.dataset.cur.match(/^(.*)-(\d+)$/);
+  const s = cur && findSeries(cur[1]), i = s && s.issues.find(x=>x.n===+cur[2]);
+  if(t.hasAttribute("data-markread")){
+    const k=key(s,i.n);
+    if(readSet.has(k)){ readSet.delete(k); toast("Marked as unread"); }
+    else { s.issues.forEach(x=>{ if(x.n<=i.n) readSet.add(key(s,x.n)); }); toast(`Enjoy #${i.n+1}`); }
+    saveRead(); recapView(s,i); return;
+  }
+  if(t.hasAttribute("data-catch")){ analytics.event("catch_me_up_open",{ series:s.title, issue:i.n }); catchSheet(s,i); return; }
+  if(t.dataset.fb){ sbFetch("feedback",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({issue_id:key(s,i.n),accurate:t.dataset.fb==="y"})}).catch(()=>{}); app.querySelectorAll("[data-fb]").forEach(b=>b.classList.toggle("on",b===t)); toast(t.dataset.fb==="y"?"Thanks!":"Thanks — we'll check it"); return; }
+});
+
+/* compact bar once the masthead scrolls away */
+const bar=document.getElementById("bar");
+new IntersectionObserver(([e])=>bar.classList.toggle("show",!e.isIntersecting)).observe(document.getElementById("mast"));
+if(canTrack()) startTracking();
+document.getElementById("yr").textContent=new Date().getFullYear();
+app.innerHTML=`<div class="wrap loading"><p class="meta">Loading recaps…</p></div>`;
+loadData().then(()=>{ route(); showConsent(); }).catch(err=>{ console.error(err);
+  app.innerHTML=`<div class="wrap loading"><h1 class="cond">Couldn't load recaps</h1><p>Please refresh the page in a moment.</p></div>`; });
+</script>
+</body>
+</html>

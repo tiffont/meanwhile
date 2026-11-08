@@ -427,7 +427,7 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 <footer><div class="wrap fgrid">
 <div class="fmain"><div class="fbrand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="logo">Meanwhile…</span></div>
 <p class="fabout">Quick recaps of comics you've already read, so you can jump into the next issue without rereading the last one. <b class="spoil-note">Heads up: this is not a spoiler-free site.</b></p></div>
-<nav class="flinks" aria-label="Legal"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#disclaimer">Disclaimer</a><a href="#takedown">Copyright &amp; takedowns</a><a href="#contact">Contact</a><button data-cookieprefs>Cookie settings</button></nav>
+<nav class="flinks" aria-label="Legal"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#disclaimer">Disclaimer</a><a href="#contact">Contact</a></nav>
 <p class="fcopy">© <span id="yr"></span> Meanwhile…</p></div></footer>
 <div class="toast" id="toast"></div>
 
@@ -792,7 +792,7 @@ const LEGAL = {
     <h2>Intellectual property</h2>
     <p>Comic titles, characters, story elements, cover art and publisher logos belong to their respective owners. We use cover thumbnails and publisher names and logos only to identify the works being discussed. Our recaps are original summaries written in our own words. We do not host or distribute comic pages, and nothing on the Site is a replacement for buying the comics.</p>
     <p>The Site's design, code and original recap text belong to ${esc(CONFIG.ownerName)}. You may share links to recaps and quote short excerpts with credit. Please don't copy recaps wholesale or republish them elsewhere.</p>
-    <p>If you are a rights holder and believe something on the Site should be removed, see <a href="#takedown">Copyright &amp; takedowns</a>.</p>
+    <p>If you are a rights holder and believe something on the Site should be removed, email ${mail(CONFIG.contactEmail)}.</p>
     <h2>Acceptable use</h2>
     <p>Please don't scrape the Site in bulk, attempt to disrupt it, or use it for anything unlawful.</p>
     <h2>Third-party links and services</h2>
@@ -820,33 +820,13 @@ const LEGAL = {
     <h2>Hosting</h2>
     <p>Like any website, our hosting provider automatically processes technical data such as IP addresses to deliver pages and protect against abuse.</p>
     <h2>Your choices and rights</h2>
-    <p>You can change your cookie choice at any time with <button class="inlinebtn" data-cookieprefs>Cookie settings</button>. You can also block cookies in your browser. Depending on where you live (for example the EU, UK or California), you may have rights to access, delete or object to the processing of personal data. Because we hold almost none, most requests will be about analytics data. Contact us and we'll help.</p>
+    <p>You can change your cookie choice at any time by clearing this site's data in your browser. You can also block cookies in your browser. Depending on where you live (for example the EU, UK or California), you may have rights to access, delete or object to the processing of personal data. Because we hold almost none, most requests will be about analytics data. Contact us and we'll help.</p>
     <h2>Children</h2>
     <p>The Site isn't directed at children under 13, and we don't knowingly collect their personal information.</p>
     <h2>Changes</h2>
     <p>We'll update this policy if what we collect changes. The date at the top shows the latest version.</p>
     <h2>Contact</h2>
     <p>Privacy questions: ${mail(CONFIG.contactEmail)}.</p>`},
-  takedown: {t:"Copyright & Takedowns", body:()=>`
-    <p>We respect the rights of creators and publishers. Meanwhile… shows small cover thumbnails and publisher logos to identify the comics we recap, and writes original summaries in its own words. We don't host comic pages.</p>
-    <p>If you own the rights to something on the Site and want it changed or removed, we'll act quickly, usually within a few business days.</p>
-    <h2>How to send a request</h2>
-    <p>Email ${mail(CONFIG.takedownEmail)} with:</p>
-    <ol>
-      <li>Your name, organisation and contact details.</li>
-      <li>The work you own (for example the comic title and issue, or the cover).</li>
-      <li>The page address on Meanwhile… where it appears.</li>
-      <li>What you'd like us to do (remove the cover, remove the recap, correct something).</li>
-      <li>A statement that you have a good-faith belief the use isn't authorised by the owner, its agent or the law.</li>
-      <li>A statement that the information is accurate and, under penalty of perjury, that you are the owner or authorised to act for the owner.</li>
-      <li>Your physical or electronic signature.</li>
-    </ol>
-    <h2>Counter-notice</h2>
-    <p>If something was removed by mistake, the affected party can send a counter-notice to the same address explaining why, with the details required by law.</p>
-    <h2>Corrections</h2>
-    <p>Not a copyright issue, just an error in a recap? <a href="#contact">Contact us</a>.</p>
-    <h2>Where to send requests</h2>
-    <p>${esc(CONFIG.ownerName)}<br>${CONFIG.mailingAddress?esc(CONFIG.mailingAddress)+"<br>":""}${mail(CONFIG.takedownEmail)}</p>`},
   disclaimer: {t:"Disclaimer", body:()=>`
     <h2>Spoilers</h2>
     <p>Meanwhile… is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings.</p>
@@ -857,10 +837,10 @@ const LEGAL = {
     <h2>Accuracy</h2>
     <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors. If you spot one, <a href="#contact">contact us</a>.</p>
     <h2>Rights holders</h2>
-    <p>If you own something shown here and want it changed or removed, see <a href="#takedown">Copyright &amp; takedowns</a>.</p>`},
+    <p>If you own something shown here and want it changed or removed, email ${mail(CONFIG.contactEmail)}.</p>`},
   contact: {t:"Contact", body:()=>`
     <p>Questions, corrections or ideas for comics to recap: ${mail(CONFIG.contactEmail)}.</p>
-    <p>Rights holders with removal requests: please see <a href="#takedown">Copyright &amp; takedowns</a> or email ${mail(CONFIG.takedownEmail)}.</p>
+    <p>Rights holders with removal requests: email ${mail(CONFIG.contactEmail)} and we'll act quickly.</p>
     <p class="mnote">Some browsers and apps can't open email links directly. If nothing happens, copy the address above.</p>`}
 };
 function legalView(id){

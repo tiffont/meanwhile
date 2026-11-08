@@ -427,7 +427,7 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 <footer><div class="wrap fgrid">
 <div class="fmain"><div class="fbrand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="logo">Meanwhile…</span></div>
 <p class="fabout">Quick recaps of comics you've already read, so you can jump into the next issue without rereading the last one. <b class="spoil-note">Heads up: this is not a spoiler-free site.</b></p></div>
-<nav class="flinks" aria-label="Legal"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#disclaimer">Disclaimer</a><a href="#contact">Contact</a></nav>
+<nav class="flinks" aria-label="Legal"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#disclaimer">Disclaimer</a></nav>
 <p class="fcopy">© <span id="yr"></span> Meanwhile…</p></div></footer>
 <div class="toast" id="toast"></div>
 
@@ -441,8 +441,6 @@ const CONFIG = {
   siteUrl: "https://meanwhile-comic-recaps.vercel.app",                    // e.g. "https://meanwhile.app" — used in share links (falls back to the current URL)
   siteName: "Meanwhile…",
   ownerName: "Meanwhile",   // legal owner shown in the policies
-  contactEmail: "hello@meanwhile.com",      // general + privacy contact
-  takedownEmail: "hello@meanwhile.com",  // copyright / removal requests
   mailingAddress: "",    // needed if you register a DMCA agent
   legalUpdated: "November 7, 2026",
   adsEnabled: false,              // flip to true when you're ready for ads — slots, house ads and AdSense all come back
@@ -452,7 +450,7 @@ const CONFIG = {
     "home-mid": "", "home-low": "", "recap-mid": "", "recap-end": "", "list": ""
   },
   houseAds: [                     // shown when an AdSense unit isn't set (or is blocked) — your own promos/sponsors
-    {title:"Your comic shop here", text:"Advertise to readers who are about to pick up their next issue.", cta:"Advertise", href:"mailto:hello@meanwhile.com"},
+    {title:"Your comic shop here", text:"Advertise to readers who are about to pick up their next issue.", cta:"Advertise", href:"#"},
     {title:"Never lose the plot", text:"Bookmark Meanwhile… and check back before every new issue.", cta:"Browse recaps", href:"#all-latest"}
   ],
   requireConsent: true            // show the cookie banner before analytics/ads load
@@ -788,11 +786,10 @@ const LEGAL = {
     <h2>Spoilers</h2>
     <p>This is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings. Only read recaps of issues you've already read or don't mind having spoiled.</p>
     <h2>Accuracy and AI assistance</h2>
-    <p>Recaps are written with the help of AI tools and reviewed by us, but they may still contain mistakes, such as misidentified characters or misread scenes. Recaps are provided "as is" for general information and entertainment. They are not a substitute for reading the comics. If you spot an error, <a href="#contact">contact us</a>.</p>
+    <p>Recaps are written with the help of AI tools and reviewed by us, but they may still contain mistakes, such as misidentified characters or misread scenes. Recaps are provided "as is" for general information and entertainment. They are not a substitute for reading the comics.</p>
     <h2>Intellectual property</h2>
     <p>Comic titles, characters, story elements, cover art and publisher logos belong to their respective owners. We use cover thumbnails and publisher names and logos only to identify the works being discussed. Our recaps are original summaries written in our own words. We do not host or distribute comic pages, and nothing on the Site is a replacement for buying the comics.</p>
     <p>The Site's design, code and original recap text belong to ${esc(CONFIG.ownerName)}. You may share links to recaps and quote short excerpts with credit. Please don't copy recaps wholesale or republish them elsewhere.</p>
-    <p>If you are a rights holder and believe something on the Site should be removed, email ${mail(CONFIG.contactEmail)}.</p>
     <h2>Acceptable use</h2>
     <p>Please don't scrape the Site in bulk, attempt to disrupt it, or use it for anything unlawful.</p>
     <h2>Third-party links and services</h2>
@@ -802,7 +799,7 @@ const LEGAL = {
     <h2>Changes</h2>
     <p>We may update these terms from time to time. The date at the top shows when they last changed. Continuing to use the Site after a change means you accept the updated terms.</p>
     <h2>Contact</h2>
-    <p>Questions about these terms: ${mail(CONFIG.contactEmail)}.</p>`},
+`},
   privacy: {t:"Privacy Policy", body:()=>`
     <p>This policy explains what information Meanwhile… (run by ${esc(CONFIG.ownerName)}) collects, how it's used, and the choices you have. We keep it short because we collect very little.</p>
     <h2>What we don't collect</h2>
@@ -820,13 +817,12 @@ const LEGAL = {
     <h2>Hosting</h2>
     <p>Like any website, our hosting provider automatically processes technical data such as IP addresses to deliver pages and protect against abuse.</p>
     <h2>Your choices and rights</h2>
-    <p>You can change your cookie choice at any time by clearing this site's data in your browser. You can also block cookies in your browser. Depending on where you live (for example the EU, UK or California), you may have rights to access, delete or object to the processing of personal data. Because we hold almost none, most requests will be about analytics data. Contact us and we'll help.</p>
+    <p>You can change your cookie choice at any time by clearing this site's data in your browser. You can also block cookies in your browser. Depending on where you live (for example the EU, UK or California), you may have rights to access, delete or object to the processing of personal data. Because we hold almost none, most requests will be about analytics data.</p>
     <h2>Children</h2>
     <p>The Site isn't directed at children under 13, and we don't knowingly collect their personal information.</p>
     <h2>Changes</h2>
     <p>We'll update this policy if what we collect changes. The date at the top shows the latest version.</p>
-    <h2>Contact</h2>
-    <p>Privacy questions: ${mail(CONFIG.contactEmail)}.</p>`},
+`},
   disclaimer: {t:"Disclaimer", body:()=>`
     <h2>Spoilers</h2>
     <p>Meanwhile… is not a spoiler-free site. Every recap covers its issue in full, including twists, deaths and endings.</p>
@@ -835,13 +831,8 @@ const LEGAL = {
     <h2>Ownership</h2>
     <p>Comic titles, characters, story elements, cover art and publisher logos are the property of their respective owners. Cover thumbnails and logos are shown only to identify the comics being discussed. Recaps are original summaries written in our own words and are not a substitute for reading the comics.</p>
     <h2>Accuracy</h2>
-    <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors. If you spot one, <a href="#contact">contact us</a>.</p>
-    <h2>Rights holders</h2>
-    <p>If you own something shown here and want it changed or removed, email ${mail(CONFIG.contactEmail)}.</p>`},
-  contact: {t:"Contact", body:()=>`
-    <p>Questions, corrections or ideas for comics to recap: ${mail(CONFIG.contactEmail)}.</p>
-    <p>Rights holders with removal requests: email ${mail(CONFIG.contactEmail)} and we'll act quickly.</p>
-    <p class="mnote">Some browsers and apps can't open email links directly. If nothing happens, copy the address above.</p>`}
+    <p>Recaps are written with AI assistance and reviewed by us, but they may still contain errors.</p>
+`}
 };
 function legalView(id){
   const L=LEGAL[id];

@@ -128,6 +128,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .card:active{transform:scale(.98)}
 .card .img{width:100%;aspect-ratio:2/3;background:var(--skel);overflow:hidden;position:relative;border-radius:8px}
 .card .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+video.hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;opacity:0;transition:opacity .25s;pointer-events:none;display:block}
+video.hv.on{opacity:1}
 .card .tag,.card b,.card .meta{margin-inline:4px}
 .card b{font-weight:700;font-size:1.08rem;line-height:1.18}
 .card .meta{color:var(--ink2)}
@@ -555,6 +557,7 @@ async function loadData(){
   PUBLISHERS = pubs.map(p=>({ id:p.id, name:p.name, logo:p.logo_url }));
   const pname = Object.fromEntries(PUBLISHERS.map(p=>[p.id,p.name]));
   const byS = {};
+  VIDEOS = Object.fromEntries(issues.filter(i=>i.video_url&&i.cover_url).map(i=>[i.cover_url,i.video_url]));
   issues.forEach(i=>{ (byS[i.series_id] ||= []).push({
     n:i.number, title:i.title||"", cover:i.cover_url, publishedAt:i.published_at,
     recap:{ deck:i.deck, standard:i.paragraphs, cast:i.cast_list.map(c=>[c.name,c.role]), things:i.things.map(t=>({b:t.title,s:t.text})), cliff:i.cliffhanger }
@@ -585,7 +588,23 @@ const allIssues = ()=>SERIES.flatMap(s=>s.issues.map(i=>({s,i}))).sort((a,b)=>ne
 const recapsIn = s=>s.issues.filter(i=>i.recap).length;
 const issueTitle = (s,i)=> i.title || `Issue #${i.n}`;
 const coverOf = s=>{ const c=[...s.issues].reverse().find(i=>i.cover); return c&&c.cover; };
-const img = (src,n)=> src ? `<img src="${src}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">` : `<div class="ph" style="position:absolute;inset:0"><span>#${n}</span></div>`;
+let VIDEOS = {};
+const img = (src,n)=> src ? `<img src="${src}" alt="" loading="lazy"${VIDEOS[src]?` data-video="${esc(VIDEOS[src])}"`:""} onerror="this.style.visibility='hidden'">` : `<div class="ph" style="position:absolute;inset:0"><span>#${n}</span></div>`;
+/* animated covers: play on hover */
+document.addEventListener("pointerover",e=>{
+  if(e.pointerType!=="mouse") return;
+  const host=e.target.closest("button,a"); if(!host) return;
+  const im=host.querySelector("img[data-video]"); if(!im) return;
+  let v=im.parentElement.querySelector("video.hv");
+  if(!v){ v=document.createElement("video"); v.className="hv"; v.muted=true; v.loop=true; v.playsInline=true; v.preload="auto"; v.src=im.dataset.video;
+    v.addEventListener("playing",()=>{ if(v._want) v.classList.add("on"); }); im.after(v); }
+  v._want=true; v.play().catch(()=>{});
+});
+document.addEventListener("pointerout",e=>{
+  const host=e.target.closest("button,a"); if(!host || host.contains(e.relatedTarget)) return;
+  const v=host.querySelector("video.hv"); if(!v) return;
+  v._want=false; v.classList.remove("on"); v.pause();
+});
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
 function go(h){ closeSearch(); if(location.hash==="#"+h) route(); else location.hash=h; }
 

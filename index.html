@@ -419,6 +419,9 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 .rbtn:hover:not(:disabled){border-color:var(--ink)}
 .rbtn:disabled{opacity:.3;cursor:default}
 @media (hover:hover) and (pointer:fine) and (min-width:768px){.rnav.on{display:flex}}
+
+/* prominent featured label */
+.feat .ftxt .tag.solid{height:30px;padding:0 14px;font-size:.8rem;font-weight:800;letter-spacing:.08em;box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent),0 0 24px color-mix(in srgb,var(--lime) 35%,transparent);align-self:flex-start}
 </style>
 </head>
 <body>
@@ -577,7 +580,7 @@ async function loadData(){
   const byS = {};
   VIDEOS = Object.fromEntries(issues.filter(i=>i.video_url&&i.cover_url).map(i=>[i.cover_url,i.video_url]));
   issues.forEach(i=>{ (byS[i.series_id] ||= []).push({
-    n:i.number, title:i.title||"", cover:i.cover_url, publishedAt:i.published_at,
+    n:i.number, title:i.title||"", cover:i.cover_url, publishedAt:i.published_at, views:+i.views||0,
     recap:{ deck:i.deck, standard:i.paragraphs, cast:i.cast_list.map(c=>[c.name,c.role]), things:i.things.map(t=>({b:t.title,s:t.text})), cliff:i.cliffhanger }
   }); });
   // order series by their most recent published issue so "Latest" stays newest-last in allIssues()
@@ -638,6 +641,12 @@ document.addEventListener("click",e=>{ const b=e.target.closest(".rbtn"); if(!b)
   e.preventDefault(); e.stopPropagation(); r.scrollBy({left:+b.dataset.dir*Math.max(220,r.clientWidth*0.85),behavior:"smooth"}); },true);
 new MutationObserver(()=>enhanceRails()).observe(app,{childList:true});
 window.addEventListener("resize",()=>app.querySelectorAll(".rail").forEach(syncRail));
+/* anonymous view counter: one bump per issue per browser session */
+function bumpView(id){ try{ const k="mw:v:"+id; if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,"1"); }catch(e){}
+  fetch(`${SB_URL}/rest/v1/rpc/bump_view`,{method:"POST",headers:{apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,"Content-Type":"application/json"},body:JSON.stringify({p_id:id})}).catch(()=>{}); }
+const RAIL_MAX = 10;
+const popularSeries = ()=>[...SERIES].map(s=>({s, v:s.issues.reduce((a,i)=>a+(i.views||0),0), t:Math.max(...s.issues.map(i=>+new Date(i.publishedAt)))}))
+  .sort((a,b)=>b.v-a.v||b.t-a.t).map(x=>x.s);
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
 function go(h){ closeSearch(); if(location.hash==="#"+h) route(); else location.hash=h; }
 
@@ -685,17 +694,17 @@ function home(){
   <div class="wrap">${ads.slot("home-mid")}</div>
 
   <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Latest</h2><a class="seeall" href="#all-latest">See all <span>${latest.length}</span>${ARROW}</a></div></div>
-    <div class="rail">${latest.filter(x=>x!==lead).map(recapCard).join("")}</div>
+    <div class="rail">${latest.filter(x=>x!==lead).slice(0,RAIL_MAX).map(recapCard).join("")}</div>
   </section>
 
-  <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Series</h2><a class="seeall" href="#all-series">See all <span>${SERIES.length}</span>${ARROW}</a></div></div>
-    <div class="rail">${SERIES.map(seriesCard).join("")}</div>
+  <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Popular</h2><a class="seeall" href="#all-series">See all <span>${SERIES.length}</span>${ARROW}</a></div></div>
+    <div class="rail">${popularSeries().slice(0,RAIL_MAX).map(seriesCard).join("")}</div>
   </section>
 
   <div class="wrap">${ads.slot("home-low")}</div>
 
   <section class="sec"><div class="wrap"><div class="shead"><h2 class="cond">Publishers</h2><a class="seeall" href="#all-publishers">See all <span>${activePubs().length}</span>${ARROW}</a></div></div>
-    <div class="rail">${activePubs().map(pubCard).join("")}</div>
+    <div class="rail">${activePubs().slice(0,RAIL_MAX).map(pubCard).join("")}</div>
   </section>`;
 }
 
@@ -897,7 +906,7 @@ function route(){
   else if(s) seriesView(s);
   else {
     const m = h.match(/^(.*)-(\d+)$/), ss = m && findSeries(m[1]), ii = ss && ss.issues.find(x=>x.n===+m[2]);
-    if(ii && ii.recap) recapView(ss,ii);
+    if(ii && ii.recap){ recapView(ss,ii); bumpView(key(ss,ii.n)); }
     else if(ii) seriesView(ss);
     else home();
   }

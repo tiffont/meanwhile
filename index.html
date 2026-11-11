@@ -409,7 +409,16 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 .seeall:hover,.feat:hover .fgo{border-color:var(--ink)}
 .feat .fgo{margin-top:14px;margin-bottom:0}
 .shead .seeall{margin-bottom:0;flex:none}
+.shead .rnav+.seeall{margin-left:0}
 .shead h2{line-height:1}
+
+/* desktop slider arrows */
+.rnav{display:none;gap:8px;margin-left:auto}
+.rbtn{width:40px;height:40px;border-radius:999px;border:1px solid #5a5a5a;background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0;transition:border-color .2s,opacity .2s}
+.rbtn svg{width:16px;height:16px}
+.rbtn:hover:not(:disabled){border-color:var(--ink)}
+.rbtn:disabled{opacity:.3;cursor:default}
+@media (hover:hover) and (pointer:fine) and (min-width:768px){.rnav.on{display:flex}}
 </style>
 </head>
 <body>
@@ -614,6 +623,21 @@ document.addEventListener("pointerout",e=>{
   const v=host.querySelector("video.hv"); if(!v) return;
   v._want=false; v.classList.remove("on"); v.pause();
 });
+
+/* desktop slider arrows */
+const CHEV=d=>`<svg viewBox="0 0 16 16" aria-hidden="true"><path d="${d<0?"M10 3 5 8l5 5":"M6 3l5 5-5 5"}" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`;
+function railOf(el){ const sec=el.closest("section"); return sec&&sec.querySelector(".rail"); }
+function syncRail(r){ const nav=r._nav; if(!nav) return; const max=r.scrollWidth-r.clientWidth;
+  nav.classList.toggle("on", max>4); nav.children[0].disabled=r.scrollLeft<=4; nav.children[1].disabled=r.scrollLeft>=max-4; }
+function enhanceRails(){ app.querySelectorAll("section .shead").forEach(h=>{ const r=railOf(h); if(!r||r._nav) return;
+  const nav=document.createElement("div"); nav.className="rnav";
+  nav.innerHTML=`<button class="rbtn" data-dir="-1" aria-label="Scroll left">${CHEV(-1)}</button><button class="rbtn" data-dir="1" aria-label="Scroll right">${CHEV(1)}</button>`;
+  const see=h.querySelector(".seeall"); h.insertBefore(nav, see||null); r._nav=nav;
+  r.addEventListener("scroll",()=>syncRail(r),{passive:true}); syncRail(r); }); }
+document.addEventListener("click",e=>{ const b=e.target.closest(".rbtn"); if(!b) return; const r=railOf(b); if(!r) return;
+  e.preventDefault(); e.stopPropagation(); r.scrollBy({left:+b.dataset.dir*Math.max(220,r.clientWidth*0.85),behavior:"smooth"}); },true);
+new MutationObserver(()=>enhanceRails()).observe(app,{childList:true});
+window.addEventListener("resize",()=>app.querySelectorAll(".rail").forEach(syncRail));
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
 function go(h){ closeSearch(); if(location.hash==="#"+h) route(); else location.hash=h; }
 

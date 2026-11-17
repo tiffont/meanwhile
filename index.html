@@ -428,7 +428,7 @@ footer p{margin:10px 0 0;font-size:.78rem;max-width:52ch}
 @media (min-width:641px) and (max-width:1279px){.mast .logo{font-size:min(5.3vw,5.2rem)}}
 
 /* where we left off: same treatment as three things */
-.leftoff{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.leftoff{display:block;padding:16px 0;border-bottom:1px solid var(--rule)}
 .leftoff .n{font-size:3rem;line-height:.55;color:var(--lime-text)}
 .leftoff p{margin:0;font-size:1.1rem;line-height:1.45;font-weight:500}
 </style>
@@ -773,7 +773,7 @@ function recapView(s,i){
     <h2 class="h2 cond">Three things to remember</h2>
     <ol class="nums">${r.things.map((t,k)=>`<li><span class="n disp">${k+1}</span><div><b>${t.b}</b><span>${t.s}</span></div></li>`).join("")}</ol>
     <h2 class="h2 cond">Where we left off</h2>
-    <div class="leftoff"><span class="n disp" aria-hidden="true">…</span><p>${r.cliff}</p></div>
+    <div class="leftoff"><p>${r.cliff}</p></div>
     <div class="actions">
       ${issueRows(s).length>1?`<button class="btn solid" data-catch>Missed more? Catch me up</button>`:""}
     </div>
